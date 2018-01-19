@@ -5,8 +5,8 @@ import (
 )
 
 type Config struct {
-	Title string
-	SubTitle string
+	Title       string
+	SubTitle    string
 	Description string
 }
 

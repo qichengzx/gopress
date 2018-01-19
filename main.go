@@ -2,15 +2,17 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"time"
 	"x/config"
-	"log"
+	"x/post"
 )
 
 var cfFile string = "./_config.toml"
 
-type Site struct{
-	cfg *config.Config
+type Site struct {
+	Posts []*post.Post
+	cfg   *config.Config
 }
 
 func main() {
@@ -25,7 +27,11 @@ func main() {
 
 	var s Site
 	s.cfg = config.NewProvider(cfFile)
-	fmt.Println("Welcome to ",s.cfg.Title)
+	fmt.Println("Welcome to ", s.cfg.Title)
+
+	posts := post.GetPosts("./source/_posts")
+
+	for _, p := range posts {
+		fmt.Println(p)
+	}
 }
-
-

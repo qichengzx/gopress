@@ -16,9 +16,15 @@ type Post struct {
 	Title    string
 	Category string
 	Date     string
+	Year     int
+	Unixtime int64
 	Tags     []string
 	Content  template.HTML
 	Link     string
+}
+
+type Tag struct {
+	Name string
 }
 
 var (
@@ -26,12 +32,15 @@ var (
 	fileExt     = ".md"
 )
 
-func GetPosts(path string) []*Post {
+func GetPosts(path string) ([]*Post, []string, []string) {
 	return getPostlist(path)
 }
 
-func getPostlist(path string) []*Post {
+func getPostlist(path string) ([]*Post, []string, []string) {
 	var Posts []*Post
+	var tags []string
+	var cates []string
+
 	err := filepath.Walk(path, func(path string, f os.FileInfo, err error) error {
 		var p = &Post{}
 		if f == nil {
@@ -49,6 +58,11 @@ func getPostlist(path string) []*Post {
 		p.setContent(path)
 
 		Posts = append(Posts, p)
+		cates = append(cates, p.Category)
+
+		for _, t := range p.Tags {
+			tags = append(tags, t)
+		}
 
 		return nil
 	})
@@ -57,7 +71,7 @@ func getPostlist(path string) []*Post {
 		panic(err)
 	}
 
-	return Posts
+	return Posts, tags, cates
 }
 
 func (p *Post) setContent(fileName string) *Post {
@@ -107,4 +121,28 @@ func getContent(c []byte) template.HTML {
 	str := blackfriday.MarkdownCommon([]byte(content))
 
 	return template.HTML(str)
+}
+
+func formatDate(layout string) string {
+	t, err := time.Parse("2006-01-02 15:04:05", layout)
+	if err != nil {
+		panic(err)
+	}
+	return t.Format("2006-01-02")
+}
+
+func formatDatetime(layout string) string {
+	t, err := time.Parse("2006-01-02 15:04:05", layout)
+	if err != nil {
+		panic(err)
+	}
+	return t.Format(time.RFC3339)
+}
+
+func formatUnix(layout string) int64 {
+	t, err := time.Parse("2006-01-02 15:04:05", layout)
+	if err != nil {
+		panic(err)
+	}
+	return t.Unix()
 }

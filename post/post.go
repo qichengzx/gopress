@@ -32,17 +32,17 @@ var (
 	fileExt     = ".md"
 )
 
-func GetPosts(path string) ([]*Post, []string, []string) {
+func GetPosts(path string) ([]Post, []string, []string) {
 	return getPostlist(path)
 }
 
-func getPostlist(path string) ([]*Post, []string, []string) {
-	var Posts []*Post
+func getPostlist(path string) ([]Post, []string, []string) {
+	var Posts []Post
 	var tags []string
 	var cates []string
 
 	err := filepath.Walk(path, func(path string, f os.FileInfo, err error) error {
-		var p = &Post{}
+		var p = Post{}
 		if f == nil {
 			return err
 		}
@@ -71,7 +71,7 @@ func getPostlist(path string) ([]*Post, []string, []string) {
 		panic(err)
 	}
 
-	return Posts, tags, cates
+	return SortPost(Posts), tags, cates
 }
 
 func (p *Post) setContent(fileName string) *Post {

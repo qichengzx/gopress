@@ -15,7 +15,7 @@ var (
 )
 
 type Site struct {
-	Posts      []*post.Post
+	Posts      []post.Post
 	Categories map[string]int
 	Tags       map[string]int
 

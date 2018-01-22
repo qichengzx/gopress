@@ -5,9 +5,14 @@ import (
 )
 
 type Config struct {
-	Title       string
-	SubTitle    string
-	Description string
+	Title       string `toml:"title"`
+	SubTitle    string `toml:"subtitle"`
+	Description string `toml:"description"`
+
+	SourceDir   string `toml:"source_dir"`
+	PublicDir   string `toml:"public_dir"`
+	TagDir      string `toml:"tag_dir"`
+	CategoryDir string `toml:"category_dir"`
 }
 
 func NewProvider(f string) *Config {

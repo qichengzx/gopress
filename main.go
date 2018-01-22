@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
+	"path/filepath"
 	"strings"
 	"time"
 	"x/config"
@@ -10,8 +12,8 @@ import (
 )
 
 var (
-	cfFile   string = "./_config.toml"
-	postPath string = "./source/_posts"
+	cfFile  string = "./_config.toml"
+	appPath string
 )
 
 type Site struct {
@@ -36,7 +38,10 @@ func main() {
 	s.cfg = config.NewProvider(cfFile)
 	fmt.Println("Welcome to ", s.cfg.Title)
 
-	posts, tags, cates := post.GetPosts("./source/_posts")
+	appPath, _ := os.Getwd()
+	postPath := filepath.Join(appPath, s.cfg.SourceDir)
+
+	posts, tags, cates := post.GetPosts(postPath)
 
 	tagStr := strings.Join(tags, " ")
 	cateStr := strings.Join(cates, " ")

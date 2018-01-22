@@ -1,3 +1,9 @@
 title = "启程"
 subtitle = ""
 description = ""
+
+# Directory
+source_dir = "source/_posts"
+public_dir = "public"
+tag_dir = "tags"
+category_dir = "categories"

@@ -13,6 +13,9 @@ type Config struct {
 	PublicDir   string `toml:"public_dir"`
 	TagDir      string `toml:"tag_dir"`
 	CategoryDir string `toml:"category_dir"`
+
+	PerPage       int    `toml:"per_page"`
+	PaginationDir string `toml:"pagination_dir"`
 }
 
 func NewProvider(f string) *Config {

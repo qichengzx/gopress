@@ -9,20 +9,13 @@ import (
 	"time"
 	"x/config"
 	"x/post"
+	"x/xlib"
 )
 
 var (
 	cfFile  string = "./_config.toml"
 	appPath string
 )
-
-type Site struct {
-	Posts      []post.Post
-	Categories map[string]int
-	Tags       map[string]int
-
-	cfg *config.Config
-}
 
 func main() {
 	timeStart := time.Now()
@@ -34,12 +27,12 @@ func main() {
 		log.Println("Used", used)
 	}()
 
-	var s Site
-	s.cfg = config.NewProvider(cfFile)
-	fmt.Println("Welcome to ", s.cfg.Title)
+	var s xlib.Site
+	s.Cfg = config.NewProvider(cfFile)
+	fmt.Println("Welcome to ", s.Cfg.Title)
 
 	appPath, _ := os.Getwd()
-	postPath := filepath.Join(appPath, s.cfg.SourceDir)
+	postPath := filepath.Join(appPath, s.Cfg.SourceDir)
 
 	posts, tags, cates := post.GetPosts(postPath)
 
@@ -50,5 +43,5 @@ func main() {
 	s.Tags = post.WordToMAP(tagStr)
 	s.Categories = post.WordToMAP(cateStr)
 
-	fmt.Println(s)
+	s.Build()
 }

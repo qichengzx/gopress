@@ -1,6 +1,8 @@
 package post
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"github.com/russross/blackfriday"
 	"gopkg.in/yaml.v2"
 	"html/template"
@@ -55,6 +57,7 @@ func getPostlist(path string) ([]Post, []string, []string) {
 			return nil
 		}
 
+		p.setID()
 		p.setContent(path)
 		p.setYear()
 		p.setUnixtime()
@@ -88,6 +91,15 @@ func (p *Post) setContent(fileName string) *Post {
 	}
 
 	p.Content = getContent(content)
+
+	return p
+}
+
+func (p *Post) setID() *Post {
+	id := md5.New()
+	id.Write([]byte(p.Title))
+
+	p.ID = hex.EncodeToString(id.Sum(nil))
 
 	return p
 }

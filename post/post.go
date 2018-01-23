@@ -56,6 +56,8 @@ func getPostlist(path string) ([]Post, []string, []string) {
 		}
 
 		p.setContent(path)
+		p.setYear()
+		p.setUnixtime()
 
 		Posts = append(Posts, p)
 		cates = append(cates, p.Category)
@@ -109,10 +111,14 @@ func (p *Post) setLink(l string, id string) *Post {
 	return p
 }
 
-func getFileName(t string) string {
-	r := []rune(t)
-	length := len(r)
-	return string(r[0 : length-3])
+func (p *Post) setUnixtime() *Post {
+	p.Unixtime = formatUnix(p.Date)
+	return p
+}
+
+func (p *Post) setYear() *Post {
+	p.Year = formatYear(p.Date)
+	return p
 }
 
 func getContent(c []byte) template.HTML {
@@ -137,6 +143,15 @@ func formatDatetime(layout string) string {
 		panic(err)
 	}
 	return t.Format(time.RFC3339)
+}
+
+func formatYear(layout string) int {
+	t, err := time.Parse("2006-01-02 15:04:05", layout)
+	if err != nil {
+		panic(err)
+	}
+
+	return t.Year()
 }
 
 func formatUnix(layout string) int64 {

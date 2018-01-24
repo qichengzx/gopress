@@ -1,8 +1,8 @@
 package xlib
 
 import (
-	"fmt"
 	"math"
+	"path/filepath"
 	"x/config"
 	"x/post"
 )
@@ -19,6 +19,8 @@ type Site struct {
 	Cfg *config.Config
 }
 
+var indexPage = "index.html"
+
 func (s *Site) Build() {
 	s.CurrentPage = "index"
 	count := len(s.Posts)
@@ -33,5 +35,12 @@ func (s *Site) Build() {
 	pn.PageCount = int(pageCount)
 	s.PageNav = pn.Handler()
 
-	fmt.Println(s)
+	// backup
+	var posts = s.Posts
+	if pageCount > 1 {
+		s.Posts = posts[:perPage]
+	}
+
+	clearDir(s.Cfg.PublicDir)
+	makeFile([]byte("hello"), filepath.Join(s.Cfg.PublicDir, indexPage))
 }

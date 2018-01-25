@@ -1,6 +1,8 @@
 package xlib
 
 import (
+	"bytes"
+	"html/template"
 	"math"
 	"path/filepath"
 	"x/config"
@@ -42,5 +44,20 @@ func (s *Site) Build() {
 	}
 
 	clearDir(s.Cfg.PublicDir)
-	makeFile([]byte("hello"), filepath.Join(s.Cfg.PublicDir, indexPage))
+
+	bt := s.renderPage()
+	makeFile(bt, filepath.Join(s.Cfg.PublicDir, indexPage))
+}
+
+func (s *Site) renderPage() []byte {
+	var doc bytes.Buffer
+
+	var t = filepath.Join(s.Cfg.ThemeDir, s.Cfg.Theme, "/layout/*.html")
+	tmpl, err := template.ParseGlob(t)
+	if err != nil {
+		panic(err)
+	}
+	tmpl.ExecuteTemplate(&doc, "layout", s)
+
+	return []byte(doc.String())
 }

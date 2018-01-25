@@ -11,3 +11,7 @@ category_dir = "categories"
 # Pagination
 per_page = 10
 pagination_dir = "page"
+
+# Theme
+theme_dir = "themes"
+theme = "unnamed"

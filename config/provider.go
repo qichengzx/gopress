@@ -16,6 +16,9 @@ type Config struct {
 
 	PerPage       int    `toml:"per_page"`
 	PaginationDir string `toml:"pagination_dir"`
+
+	ThemeDir string `toml:"theme_dir"`
+	Theme    string `toml:"theme"`
 }
 
 func NewProvider(f string) *Config {

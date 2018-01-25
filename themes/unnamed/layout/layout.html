@@ -1,0 +1,16 @@
+{{ define "layout" }}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>
+		{{ if eq .CurrentPage "index" }}
+		{{ .Cfg.Title }}
+		{{ end }}
+	</title>
+</head>
+<body>
+Hello World.
+</body>
+</html>
+{{ end }}

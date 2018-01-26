@@ -44,8 +44,8 @@ func (s *Site) Build() {
 	}
 
 	clearDir(s.Cfg.PublicDir)
-
 	bt := s.renderPage()
+
 	makeFile(bt, filepath.Join(s.Cfg.PublicDir, indexPage))
 }
 

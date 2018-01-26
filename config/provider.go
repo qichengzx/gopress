@@ -9,6 +9,9 @@ type Config struct {
 	SubTitle    string `toml:"subtitle"`
 	Description string `toml:"description"`
 
+	Url       string `toml:"url"`
+	Permalink string `toml:"permalink"`
+
 	SourceDir   string `toml:"source_dir"`
 	PublicDir   string `toml:"public_dir"`
 	TagDir      string `toml:"tag_dir"`

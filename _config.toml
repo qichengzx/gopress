@@ -1,6 +1,12 @@
+# Site
 title = "启程"
 subtitle = ""
 description = ""
+author = ""
+
+# URL
+url = ""
+permalink " :year/:month/:day/:title.html"
 
 # Directory
 source_dir = "source/_posts"

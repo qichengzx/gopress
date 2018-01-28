@@ -5,6 +5,7 @@ type PageNav struct {
 	PageSlice []int
 }
 
+// TODO need a better way to handle pagnition
 func (pn *PageNav) Handler() *PageNav {
 	page := make([]int, pn.PageCount)
 	for i := 0; i < pn.PageCount; i++ {

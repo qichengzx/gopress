@@ -1,0 +1,11 @@
+# Menu
+[menu]
+    [menu.home]
+    title = "Home"
+    url = "/"
+    [menu.github]
+    title = "GitHub"
+    url = "https://github.com"
+
+# Content
+excerpt_link = "Read More"

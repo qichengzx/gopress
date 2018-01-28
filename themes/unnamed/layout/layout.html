@@ -2,15 +2,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>
-		{{ if eq .CurrentPage "index" }}
-		{{ .Cfg.Title }}
-		{{ end }}
-	</title>
+<meta charset="UTF-8">
+<title>
+{{ if eq .CurrentPage "index" }}
+	{{ .Cfg.Title }}
+	{{ if .Cfg.SubTitle }}
+	- {{ .Cfg.SubTitle }}
+	{{ end }}
+{{ else if eq .CurrentPage "post" }}
+
+{{ end }}
+</title>
+{{ template "head" .}}
 </head>
 <body>
-Hello World.
+<div id="container">
+    <div id="wrap">
+		{{ template "header" .}}
+        <div class="outer">
+
+		</div>
+		{{ template "footer" . }}
+	</div>
+</div>
 </body>
 </html>
 {{ end }}

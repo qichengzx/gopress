@@ -3,10 +3,11 @@ title = "启程"
 subtitle = ""
 description = ""
 author = ""
+rss = "/atom.xml"
 
 # URL
 url = ""
-permalink " :year/:month/:day/:title.html"
+permalink = ":year/:month/:day/:title.html"
 
 # Directory
 source_dir = "source/_posts"

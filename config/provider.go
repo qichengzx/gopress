@@ -8,6 +8,8 @@ type Config struct {
 	Title       string `toml:"title"`
 	SubTitle    string `toml:"subtitle"`
 	Description string `toml:"description"`
+	Author      string `toml:"author"`
+	Rss         string `toml:"rss"`
 
 	Url       string `toml:"url"`
 	Permalink string `toml:"permalink"`
@@ -24,8 +26,27 @@ type Config struct {
 	Theme    string `toml:"theme"`
 }
 
+type ThemeCfg struct {
+	Menu        map[string]Menu `toml:"menu"`
+	ExcerptLink string          `toml:"excerpt_link"`
+}
+
+type Menu struct {
+	Title string `toml:"title"`
+	Url   string `toml:"url"`
+}
+
 func NewProvider(f string) *Config {
 	var conf Config
+	if _, err := toml.DecodeFile(f, &conf); err != nil {
+		panic(err)
+	}
+
+	return &conf
+}
+
+func ThemeCfgProvider(f string) *ThemeCfg {
+	var conf ThemeCfg
 	if _, err := toml.DecodeFile(f, &conf); err != nil {
 		panic(err)
 	}

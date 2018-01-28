@@ -18,7 +18,8 @@ type Site struct {
 	CurrentPageIndex int
 	PageNav          *PageNav
 
-	Cfg *config.Config
+	Cfg      *config.Config
+	ThemeCfg *config.ThemeCfg
 }
 
 var indexPage = "index.html"

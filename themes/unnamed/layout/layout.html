@@ -20,7 +20,13 @@
     <div id="wrap">
 		{{ template "header" .}}
         <div class="outer">
-
+			<section id="main">
+			{{ if eq .CurrentPage "index"}}
+			{{ range $post := .Posts }}
+			{{ template "article" . }}
+			{{ end }}
+			{{ end }}
+			</section>
 		</div>
 		{{ template "footer" . }}
 	</div>

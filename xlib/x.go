@@ -16,6 +16,8 @@ type Site struct {
 
 	CurrentPage      string
 	CurrentPageIndex int
+	PrevPageIndex    int
+	NextPageIndex    int
 	PageNav          *PageNav
 
 	Cfg      *config.Config
@@ -37,10 +39,12 @@ func (s *Site) Build() {
 	var pn = PageNav{}
 	pn.PageCount = int(pageCount)
 	s.PageNav = pn.Handler()
+	s.CurrentPageIndex = 1
 
 	// backup
 	var posts = s.Posts
 	if pageCount > 1 {
+		s.NextPageIndex = 2
 		s.Posts = posts[:perPage]
 	}
 

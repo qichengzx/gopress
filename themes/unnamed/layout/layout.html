@@ -22,9 +22,18 @@
         <div class="outer">
 			<section id="main">
 			{{ if eq .CurrentPage "index"}}
-			{{ range $post := .Posts }}
-			{{ template "article" . }}
-			{{ end }}
+				{{ range $post := .Posts }}
+				{{ template "article" . }}
+				{{ end }}
+
+				{{ if gt .PageNav.PageCount 0 }}
+                    <nav id="page-nav">
+					{{ $currentPageIndex := .CurrentPageIndex }}
+					{{ if gt .PageNav.PageCount $currentPageIndex }}
+                        <a class="extend next" rel="next" href="">Next »</a>
+					{{ end }}
+                    </nav>
+				{{ end }}
 			{{ end }}
 			</section>
 		</div>

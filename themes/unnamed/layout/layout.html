@@ -29,8 +29,15 @@
 				{{ if gt .PageNav.PageCount 0 }}
                     <nav id="page-nav">
 					{{ $currentPageIndex := .CurrentPageIndex }}
+					{{ $NextPageIndex := .NextPageIndex }}
+					{{ $PrevPageIndex := .PrevPageIndex }}
+					{{ $PaginationDir := .Cfg.PaginationDir }}
+					{{ if gt $currentPageIndex 1 }}
+                        <a class="extend prev" rel="prev" href="/{{ $PaginationDir }}/{{ $PrevPageIndex }}/">« Prev</a>
+					{{ end }}
+
 					{{ if gt .PageNav.PageCount $currentPageIndex }}
-                        <a class="extend next" rel="next" href="">Next »</a>
+                        <a class="extend next" rel="next" href="/{{ $PaginationDir }}/{{ $NextPageIndex }}/">Next »</a>
 					{{ end }}
                     </nav>
 				{{ end }}

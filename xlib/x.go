@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"x/config"
 	"x/post"
+	"strconv"
 )
 
 type Site struct {
@@ -52,6 +53,21 @@ func (s *Site) Build() {
 	bt := s.renderPage()
 
 	makeFile(bt, filepath.Join(s.Cfg.PublicDir, indexPage))
+
+
+	if pageCount > 0 {
+		for i := perPage; i <= s.PageNav.PageCount; i++ {
+			s.Posts = posts[i*perPage-perPage : i*perPage]
+			s.CurrentPageIndex = i
+			s.NextPageIndex = i + 1
+			s.PrevPageIndex = i - 1
+			bt := s.renderPage()
+
+			p := strconv.Itoa(i)
+
+			makeFile(bt,filepath.Join(s.Cfg.PublicDir,s.Cfg.PaginationDir, p, indexPage))
+		}
+	}
 }
 
 func (s *Site) renderPage() []byte {

@@ -9,3 +9,6 @@
 
 # Content
 excerpt_link = "Read More"
+
+# Sidebar
+sidebar = "right"

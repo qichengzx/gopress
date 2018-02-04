@@ -53,6 +53,9 @@
 				{{ end }}
 			{{ end }}
 			</section>
+			{{ if .ThemeCfg.Sidebar }}
+			{{ template "sidebar" . }}
+			{{ end }}
 		</div>
 		{{ template "footer" . }}
 	</div>

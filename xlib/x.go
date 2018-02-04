@@ -5,9 +5,9 @@ import (
 	"html/template"
 	"math"
 	"path/filepath"
+	"strconv"
 	"x/config"
 	"x/post"
-	"strconv"
 )
 
 type Site struct {
@@ -54,7 +54,6 @@ func (s *Site) Build() {
 
 	makeFile(bt, filepath.Join(s.Cfg.PublicDir, indexPage))
 
-
 	if pageCount > 0 {
 		for i := perPage; i <= s.PageNav.PageCount; i++ {
 			s.Posts = posts[i*perPage-perPage : i*perPage]
@@ -65,7 +64,7 @@ func (s *Site) Build() {
 
 			p := strconv.Itoa(i)
 
-			makeFile(bt,filepath.Join(s.Cfg.PublicDir,s.Cfg.PaginationDir, p, indexPage))
+			makeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.PaginationDir, p, indexPage))
 		}
 	}
 }

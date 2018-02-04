@@ -29,6 +29,7 @@ type Config struct {
 type ThemeCfg struct {
 	Menu        map[string]Menu `toml:"menu"`
 	ExcerptLink string          `toml:"excerpt_link"`
+	Sidebar     string          `toml:"sidebar"`
 }
 
 type Menu struct {

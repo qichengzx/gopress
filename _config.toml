@@ -15,6 +15,9 @@ public_dir = "public"
 tag_dir = "tags"
 category_dir = "categories"
 
+# Writing
+titlecase = false # Transform title into titlecase
+
 # Pagination
 per_page = 10
 pagination_dir = "page"

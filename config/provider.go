@@ -19,6 +19,8 @@ type Config struct {
 	TagDir      string `toml:"tag_dir"`
 	CategoryDir string `toml:"category_dir"`
 
+	TitleCase bool `toml:"titlecase"`
+
 	PerPage       int    `toml:"per_page"`
 	PaginationDir string `toml:"pagination_dir"`
 
@@ -30,6 +32,7 @@ type ThemeCfg struct {
 	Menu        map[string]Menu `toml:"menu"`
 	ExcerptLink string          `toml:"excerpt_link"`
 	Sidebar     string          `toml:"sidebar"`
+	Favicon     string          `toml:"favicon"`
 }
 
 type Menu struct {

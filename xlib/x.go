@@ -26,6 +26,7 @@ type Site struct {
 }
 
 var indexPage = "index.html"
+var ThemeDir = "themes"
 
 func (s *Site) Build() {
 	s.CurrentPage = "index"
@@ -78,7 +79,7 @@ func (s *Site) makePagnition(count int, perPage int) *Site {
 func (s *Site) renderPage() []byte {
 	var doc bytes.Buffer
 
-	var t = filepath.Join(s.Cfg.ThemeDir, s.Cfg.Theme, "/layout/*.html")
+	var t = filepath.Join(ThemeDir, s.Cfg.Theme, "/layout/*.html")
 	tmpl, err := template.ParseGlob(t)
 	if err != nil {
 		panic(err)

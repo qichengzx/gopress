@@ -12,6 +12,7 @@ type Config struct {
 	Rss         string `toml:"rss"`
 
 	Url       string `toml:"url"`
+	Root      string `toml:"root"`
 	Permalink string `toml:"permalink"`
 
 	SourceDir   string `toml:"source_dir"`
@@ -19,13 +20,14 @@ type Config struct {
 	TagDir      string `toml:"tag_dir"`
 	CategoryDir string `toml:"category_dir"`
 
+	DefaultCategory string `toml:"default_category"`
+
 	TitleCase bool `toml:"titlecase"`
 
 	PerPage       int    `toml:"per_page"`
 	PaginationDir string `toml:"pagination_dir"`
 
-	ThemeDir string `toml:"theme_dir"`
-	Theme    string `toml:"theme"`
+	Theme string `toml:"theme"`
 }
 
 type ThemeCfg struct {

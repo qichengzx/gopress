@@ -29,7 +29,7 @@ func main() {
 
 	var s xlib.Site
 	s.Cfg = config.NewProvider(cfFile)
-	themeCfg := filepath.Join(xlib.ThemeDir, s.Cfg.Theme, "_config.toml")
+	themeCfg := filepath.Join(xlib.ThemeDir, s.Cfg.Theme, cfFile)
 	s.ThemeCfg = config.ThemeCfgProvider(themeCfg)
 
 	fmt.Println("Welcome to ", s.Cfg.Title)

@@ -25,11 +25,18 @@ type Site struct {
 	ThemeCfg *config.ThemeCfg
 }
 
-var indexPage = "index.html"
-var ThemeDir = "themes"
+const (
+	indexPage = "index.html"
+	ThemeDir = "themes"
+
+	PageTypeIndex = "index"
+	PageTypeTag = "tag"
+	PageTypeCat = "category"
+	PageTypePost = "post"
+)
 
 func (s *Site) Build() {
-	s.CurrentPage = "index"
+	s.CurrentPage = PageTypeIndex
 	count := len(s.Posts)
 
 	s.CurrentPageIndex = 1
@@ -42,6 +49,7 @@ func (s *Site) Build() {
 		s.Posts = posts[:s.Cfg.PerPage]
 	}
 
+	// TODO clear public dir only when generate page was success
 	clearDir(s.Cfg.PublicDir)
 	bt := s.renderPage()
 

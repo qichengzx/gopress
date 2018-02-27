@@ -10,7 +10,8 @@
 	- {{ .Cfg.SubTitle }}
 	{{ end }}
 {{ else if eq .CurrentPage "post" }}
-
+	{{ $post := index .Posts .CurrentPageIndex }}
+	{{ $post.Title }} - {{ .Cfg.Title }}
 {{ end }}
 </title>
 {{ template "head" .}}
@@ -51,6 +52,10 @@
 					{{ end }}
                     </nav>
 				{{ end }}
+
+			{{ else if eq .CurrentPage "post" }}
+				{{ $post := index .Posts .CurrentPageIndex }}
+				{{ template "article" $post }}
 			{{ end }}
 			</section>
 			{{ if .ThemeCfg.Sidebar }}

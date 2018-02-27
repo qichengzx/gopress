@@ -23,6 +23,7 @@ type Post struct {
 	Tags     []string
 	Content  template.HTML
 	Link     string
+	Index    int
 }
 
 type Tag struct {
@@ -32,6 +33,9 @@ type Tag struct {
 var (
 	contentLine = 6
 	fileExt     = ".md"
+
+	// for dev
+	permalink = ":year/:month/:day/:title.html"
 )
 
 func GetPosts(path string) ([]Post, []string, []string) {
@@ -39,9 +43,11 @@ func GetPosts(path string) ([]Post, []string, []string) {
 }
 
 func getPostlist(path string) ([]Post, []string, []string) {
-	var Posts []Post
-	var tags []string
-	var cates []string
+	var (
+		Posts []Post
+		tags  []string
+		cates []string
+	)
 
 	err := filepath.Walk(path, func(path string, f os.FileInfo, err error) error {
 		var p = Post{}
@@ -57,10 +63,13 @@ func getPostlist(path string) ([]Post, []string, []string) {
 			return nil
 		}
 
+		fileID := fileName(f.Name())
+
 		p.setID()
 		p.setContent(path)
 		p.setYear()
 		p.setUnixtime()
+		p.setLink(permalink, fileID)
 
 		Posts = append(Posts, p)
 		cates = append(cates, p.Category)
@@ -131,6 +140,12 @@ func (p *Post) setUnixtime() *Post {
 func (p *Post) setYear() *Post {
 	p.Year = formatYear(p.Date)
 	return p
+}
+
+func fileName(f string) string {
+	r := []rune(f)
+	length := len(r)
+	return string(r[0 : length-3])
 }
 
 func getContent(c []byte) template.HTML {

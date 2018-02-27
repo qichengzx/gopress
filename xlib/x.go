@@ -3,6 +3,7 @@ package xlib
 import (
 	"bytes"
 	"html/template"
+	"io/ioutil"
 	"math"
 	"path/filepath"
 	"strconv"
@@ -27,12 +28,12 @@ type Site struct {
 
 const (
 	indexPage = "index.html"
-	ThemeDir = "themes"
+	ThemeDir  = "themes"
 
 	PageTypeIndex = "index"
-	PageTypeTag = "tag"
-	PageTypeCat = "category"
-	PageTypePost = "post"
+	PageTypeTag   = "tag"
+	PageTypeCat   = "category"
+	PageTypePost  = "post"
 )
 
 func (s *Site) Build() {
@@ -68,6 +69,19 @@ func (s *Site) Build() {
 			makeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.PaginationDir, p, indexPage))
 		}
 	}
+
+	//文章页
+	s.Posts = posts
+	s.CurrentPage = "post"
+	for i, p := range s.Posts {
+		p.Index = i
+		s.CurrentPageIndex = i
+		bt := s.renderPage()
+
+		makeFile(bt, filepath.Join(s.Cfg.PublicDir, p.Link))
+	}
+
+	s.style()
 }
 
 func (s *Site) makePagnition(count int, perPage int) *Site {
@@ -95,4 +109,13 @@ func (s *Site) renderPage() []byte {
 	tmpl.ExecuteTemplate(&doc, "layout", s)
 
 	return []byte(doc.String())
+}
+
+func (s *Site) style() {
+	stylePath := filepath.Join(ThemeDir, s.Cfg.Theme, "/style.css")
+	data, err := ioutil.ReadFile(stylePath)
+	if err != nil {
+		panic(err)
+	}
+	ioutil.WriteFile(s.Cfg.PublicDir+"/style.css", data, 0644)
 }

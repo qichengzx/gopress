@@ -13,6 +13,12 @@ import (
 	"time"
 )
 
+type PostWarp struct {
+	Posts    []Post
+	CatPosts map[string][]Post
+	TagPosts map[string][]Post
+}
+
 type Post struct {
 	ID       string
 	Title    string
@@ -38,19 +44,21 @@ var (
 	permalink = ":year/:month/:day/:title.html"
 )
 
-func GetPosts(path string) ([]Post, []string, []string) {
+func GetPosts(path string) (PostWarp, []string, []string) {
 	return getPostlist(path)
 }
 
-func getPostlist(path string) ([]Post, []string, []string) {
+func getPostlist(path string) (PostWarp, []string, []string) {
 	var (
-		Posts []Post
+		pw    PostWarp
 		tags  []string
 		cates []string
 	)
 
+	var cat = map[string][]Post{}
 	err := filepath.Walk(path, func(path string, f os.FileInfo, err error) error {
 		var p = Post{}
+
 		if f == nil {
 			return err
 		}
@@ -71,7 +79,9 @@ func getPostlist(path string) ([]Post, []string, []string) {
 		p.setUnixtime()
 		p.setLink(permalink, fileID)
 
-		Posts = append(Posts, p)
+		cat[p.Category] = append(cat[p.Category], p)
+
+		pw.Posts = append(pw.Posts, p)
 		cates = append(cates, p.Category)
 
 		for _, t := range p.Tags {
@@ -85,7 +95,9 @@ func getPostlist(path string) ([]Post, []string, []string) {
 		panic(err)
 	}
 
-	return SortPost(Posts), tags, cates
+	pw.CatPosts = cat
+	pw.Posts = SortPost(pw.Posts)
+	return pw, tags, cates
 }
 
 func (p *Post) setContent(fileName string) *Post {
@@ -177,7 +189,6 @@ func formatYear(layout string) int {
 	if err != nil {
 		panic(err)
 	}
-
 	return t.Year()
 }
 

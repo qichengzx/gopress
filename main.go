@@ -37,12 +37,14 @@ func main() {
 	appPath, _ := os.Getwd()
 	postPath := filepath.Join(appPath, s.Cfg.SourceDir)
 
-	posts, tags, cates := post.GetPosts(postPath)
+	pw, tags, cates := post.GetPosts(postPath)
 
 	tagStr := strings.Join(tags, " ")
 	cateStr := strings.Join(cates, " ")
 
-	s.Posts = posts
+	s.Posts = pw.Posts
+	s.CatPosts = pw.CatPosts
+	s.TagPosts = pw.TagPosts
 	s.Tags = post.WordToMAP(tagStr)
 	s.Categories = post.WordToMAP(cateStr)
 

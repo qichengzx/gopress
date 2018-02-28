@@ -9,6 +9,8 @@
 	{{ if .Cfg.SubTitle }}
 	- {{ .Cfg.SubTitle }}
 	{{ end }}
+{{ else if eq .CurrentPage "category" }}
+	{{ .CurrentPageTitle }} - {{ .Cfg.Title }}
 {{ else if eq .CurrentPage "post" }}
 	{{ $post := index .Posts .CurrentPageIndex }}
 	{{ $post.Title }} - {{ .Cfg.Title }}
@@ -51,6 +53,10 @@
                         <a class="extend next" rel="next" href="/{{ $PaginationDir }}/{{ $NextPageIndex }}/">Next »</a>
 					{{ end }}
                     </nav>
+				{{ end }}
+			{{ else if eq .CurrentPage "category" }}
+				{{ range $post := .Posts }}
+				{{ $post.Title }}
 				{{ end }}
 
 			{{ else if eq .CurrentPage "post" }}

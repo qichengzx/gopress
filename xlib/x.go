@@ -13,10 +13,13 @@ import (
 
 type Site struct {
 	Posts      []post.Post
+	CatPosts   map[string][]post.Post
+	TagPosts   map[string][]post.Post
 	Categories map[string]int
 	Tags       map[string]int
 
 	CurrentPage      string
+	CurrentPageTitle string
 	CurrentPageIndex int
 	PrevPageIndex    int
 	NextPageIndex    int
@@ -79,6 +82,16 @@ func (s *Site) Build() {
 		bt := s.renderPage()
 
 		makeFile(bt, filepath.Join(s.Cfg.PublicDir, p.Link))
+	}
+
+	//分类页
+	s.CurrentPage = "category"
+	for cat, posts := range s.CatPosts {
+		s.Posts = posts
+		s.CurrentPageTitle = cat
+
+		bt := s.renderPage()
+		makeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.CategoryDir, cat, indexPage))
 	}
 
 	s.style()

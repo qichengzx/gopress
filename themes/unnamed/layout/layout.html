@@ -55,10 +55,13 @@
                     </nav>
 				{{ end }}
 			{{ else if eq .CurrentPage "category" }}
+            <section class="archives-wrap">
+                <div class="archives">
 				{{ range $post := .Posts }}
-				{{ $post.Title }}
+				{{ template "archive-post" $post }}
 				{{ end }}
-
+				</div>
+			</section>
 			{{ else if eq .CurrentPage "post" }}
 				{{ $post := index .Posts .CurrentPageIndex }}
 				{{ template "article" $post }}

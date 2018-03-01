@@ -28,4 +28,4 @@ pagination_dir = "page"
 
 # Theme
 theme_dir = "themes"
-theme = "unnamed"
+theme = "landscape"

@@ -7,7 +7,7 @@
                         {{ range $cate, $count := . }}
                             <li class="category-list-item">
                                 <a class="category-list-link" href="/category/{{ $cate }}/">{{ $cate }}</a>
-                                <span class="category-list-count">({{ $count }})</span>
+                                <span class="category-list-count">{{ $count }}</span>
                             </li>
                         {{ end }}
                         </ul>

@@ -75,7 +75,7 @@ func (s *Site) Build() {
 
 	//文章页
 	s.Posts = posts
-	s.CurrentPage = "post"
+	s.CurrentPage = PageTypePost
 	for i, p := range s.Posts {
 		p.Index = i
 		s.CurrentPageIndex = i
@@ -85,7 +85,7 @@ func (s *Site) Build() {
 	}
 
 	//分类页
-	s.CurrentPage = "category"
+	s.CurrentPage = PageTypeCat
 	for cat, posts := range s.CatPosts {
 		s.Posts = posts
 		s.CurrentPageTitle = cat

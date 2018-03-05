@@ -54,8 +54,9 @@ func getPostlist(path string) (PostWarp, []string, []string) {
 		tags  []string
 		cates []string
 	)
-
 	var cat = map[string][]Post{}
+	var tag = map[string][]Post{}
+
 	err := filepath.Walk(path, func(path string, f os.FileInfo, err error) error {
 		var p = Post{}
 
@@ -86,6 +87,7 @@ func getPostlist(path string) (PostWarp, []string, []string) {
 
 		for _, t := range p.Tags {
 			tags = append(tags, t)
+			tag[t] = append(tag[t], p)
 		}
 
 		return nil
@@ -97,6 +99,7 @@ func getPostlist(path string) (PostWarp, []string, []string) {
 
 	pw.CatPosts = cat
 	pw.Posts = SortPost(pw.Posts)
+	pw.TagPosts = tag
 	return pw, tags, cates
 }
 

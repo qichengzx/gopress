@@ -62,6 +62,14 @@
 				{{ end }}
 				</div>
 			</section>
+			{{ else if eq .CurrentPage "tag" }}
+			<section class="archives-wrap">
+				<div class="archives">
+				{{ range $post := .Posts }}
+				{{ template "archive-post" $post }}
+				{{ end }}
+				</div>
+			</section>
 			{{ else if eq .CurrentPage "post" }}
 				{{ $post := index .Posts .CurrentPageIndex }}
 				{{ template "article" $post }}

@@ -94,6 +94,15 @@ func (s *Site) Build() {
 		makeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.CategoryDir, cat, indexPage))
 	}
 
+	s.CurrentPage = PageTypeTag
+	for tag, posts := range s.TagPosts {
+		s.Posts = posts
+		s.CurrentPageTitle = tag
+
+		bt := s.renderPage()
+		makeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.TagDir, tag, indexPage))
+	}
+
 	s.style()
 }
 

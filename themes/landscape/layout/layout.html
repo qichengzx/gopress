@@ -11,6 +11,8 @@
 	{{ end }}
 {{ else if eq .CurrentPage "category" }}
 	{{ .CurrentPageTitle }} - {{ .Cfg.Title }}
+{{ else if eq .CurrentPage "tag" }}
+	{{ .CurrentPageTitle }} - {{ .Cfg.Title }}
 {{ else if eq .CurrentPage "post" }}
 	{{ $post := index .Posts .CurrentPageIndex }}
 	{{ $post.Title }} - {{ .Cfg.Title }}
@@ -56,6 +58,9 @@
 				{{ end }}
 			{{ else if eq .CurrentPage "category" }}
             <section class="archives-wrap">
+                <div class="archive-title-wrap">
+					<span class="archive-title">{{ .CurrentPageTitle }}</span>
+                </div>
                 <div class="archives">
 				{{ range $post := .Posts }}
 				{{ template "archive-post" $post }}
@@ -64,6 +69,9 @@
 			</section>
 			{{ else if eq .CurrentPage "tag" }}
 			<section class="archives-wrap">
+                <div class="archive-title-wrap">
+                    <span class="archive-title">{{ .CurrentPageTitle }}</span>
+                </div>
 				<div class="archives">
 				{{ range $post := .Posts }}
 				{{ template "archive-post" $post }}

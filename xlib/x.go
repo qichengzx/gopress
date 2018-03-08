@@ -7,6 +7,7 @@ import (
 	"math"
 	"path/filepath"
 	"strconv"
+	"time"
 	"x/config"
 	"x/post"
 )
@@ -27,6 +28,8 @@ type Site struct {
 
 	Cfg      *config.Config
 	ThemeCfg *config.ThemeCfg
+
+	CopyRight string
 }
 
 const (
@@ -133,6 +136,7 @@ func (s *Site) renderPage() []byte {
 	return []byte(doc.String())
 }
 
+// TODO minify style.css
 func (s *Site) style() {
 	stylePath := filepath.Join(ThemeDir, s.Cfg.Theme, "/style.css")
 	data, err := ioutil.ReadFile(stylePath)
@@ -140,4 +144,9 @@ func (s *Site) style() {
 		panic(err)
 	}
 	ioutil.WriteFile(s.Cfg.PublicDir+"/style.css", data, 0644)
+}
+
+func (s *Site) copyRight() *Site {
+	s.CopyRight = time.Now().Format("2006")
+	return s
 }

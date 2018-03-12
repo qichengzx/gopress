@@ -87,6 +87,8 @@ func (s *Site) Build() {
 		makeFile(bt, filepath.Join(s.Cfg.PublicDir, p.Link))
 	}
 
+	//TODO 分类，标签 暂不处理分页
+
 	//分类页
 	s.CurrentPage = PageTypeCat
 	for cat, posts := range s.CatPosts {
@@ -97,6 +99,7 @@ func (s *Site) Build() {
 		makeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.CategoryDir, cat, indexPage))
 	}
 
+	//标签页
 	s.CurrentPage = PageTypeTag
 	for tag, posts := range s.TagPosts {
 		s.Posts = posts

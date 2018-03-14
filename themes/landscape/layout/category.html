@@ -1,12 +1,13 @@
 {{ define "category" }}
-    {{ if gt (len . ) 0 }}
+    {{ if gt (len .Categories ) 0 }}
                 <div class="widget-wrap">
                     <h3 class="widget-title">Categories</h3>
                     <div class="widget">
                         <ul class="category-list">
-                        {{ range $cate, $count := . }}
+                        {{ $CategoryDir := .Cfg.CategoryDir }}
+                        {{ range $cate, $count := .Categories }}
                             <li class="category-list-item">
-                                <a class="category-list-link" href="/category/{{ $cate }}/">{{ $cate }}</a>
+                                <a class="category-list-link" href="/{{ $CategoryDir }}/{{ $cate }}/">{{ $cate }}</a>
                                 <span class="category-list-count">{{ $count }}</span>
                             </li>
                         {{ end }}

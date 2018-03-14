@@ -49,7 +49,7 @@ func (s *Site) Build() {
 	s.CurrentPageIndex = 1
 	s.makePagnition(count, s.Cfg.PerPage)
 	s.copyRight()
-	
+
 	// backup
 	var posts = s.Posts
 	if s.PageNav.PageCount > 1 {

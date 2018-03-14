@@ -1,12 +1,13 @@
 {{ define "tag" }}
-    {{ if gt (len . ) 0 }}
+    {{ if gt (len .Tags ) 0 }}
                 <div class="widget-wrap">
                     <h3 class="widget-title">Tags</h3>
                     <div class="widget">
                         <ul class="category-list">
-                        {{ range $tag, $count := . }}
+                        {{ $TagDir := .Cfg.TagDir }}
+                        {{ range $tag, $count := .Tags }}
                             <li class="category-list-item">
-                                <a class="category-list-link" href="/tag/{{ $tag }}/">{{ $tag }}</a>
+                                <a class="category-list-link" href="/{{ $TagDir }}/{{ $tag }}/">{{ $tag }}</a>
                                 <span class="category-list-count">{{ $count }}</span>
                             </li>
                         {{ end }}

@@ -8,10 +8,9 @@ sidebar = "right"
 favicon = "/favicon.ico"
 
 # Menu
-[menu]
-    [menu.home]
-    title = "Home"
-    url = "/"
-    [menu.github]
-    title = "GitHub"
-    url = "https://github.com"
+[[menu]]
+title = "Home"
+url = "/"
+[[menu]]
+title = "GitHub"
+url = "https://github.com"

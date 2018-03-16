@@ -21,6 +21,10 @@ default_category = "default"
 
 # Writing
 titlecase = false # Transform title into titlecase
+render_drafts = false
+
+# 
+external_link = true
 
 # Pagination
 per_page = 10

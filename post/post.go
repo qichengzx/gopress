@@ -128,7 +128,7 @@ func (p *Post) setID() *Post {
 	return p
 }
 
-func (p *Post) setLink(l string, id string) *Post {
+func (p *Post) setLink(l string, fileName string) *Post {
 	now, _ := time.Parse("2006-01-02 15:04:05", p.Date)
 
 	year := now.Format("2006")
@@ -139,8 +139,8 @@ func (p *Post) setLink(l string, id string) *Post {
 		":year", year,
 		":month", month,
 		":day", day,
-		":id", id,
-		":title", id,
+		":id", p.ID,
+		":title", fileName,
 		":category", p.Category)
 
 	p.Link = r.Replace(l)

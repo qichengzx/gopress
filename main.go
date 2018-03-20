@@ -37,6 +37,9 @@ func main() {
 	appPath, _ := os.Getwd()
 	postPath := filepath.Join(appPath, s.Cfg.SourceDir)
 
+	post.Root = s.Cfg.Root
+	post.Permalink = s.Cfg.Permalink
+
 	pw, tags, cates := post.GetPosts(postPath)
 
 	tagStr := strings.Join(tags, " ")

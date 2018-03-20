@@ -7,7 +7,7 @@ rss = "/atom.xml"
 
 # URL
 url = ""
-root = ""
+root = "/"
 permalink = ":year/:month/:day/:title.html"
 
 # Directory

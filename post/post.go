@@ -40,8 +40,8 @@ var (
 	contentLine = 6
 	fileExt     = ".md"
 
-	// for dev
-	permalink = ":year/:month/:day/:title.html"
+	Root      string
+	Permalink string
 )
 
 func GetPosts(path string) (PostWarp, []string, []string) {
@@ -78,7 +78,7 @@ func getPostlist(path string) (PostWarp, []string, []string) {
 		p.setContent(path)
 		p.setYear()
 		p.setUnixtime()
-		p.setLink(permalink, fileID)
+		p.setLink(fileID)
 
 		cat[p.Category] = append(cat[p.Category], p)
 
@@ -128,7 +128,7 @@ func (p *Post) setID() *Post {
 	return p
 }
 
-func (p *Post) setLink(l string, fileName string) *Post {
+func (p *Post) setLink(fileName string) *Post {
 	now, _ := time.Parse("2006-01-02 15:04:05", p.Date)
 
 	year := now.Format("2006")
@@ -143,7 +143,7 @@ func (p *Post) setLink(l string, fileName string) *Post {
 		":title", fileName,
 		":category", p.Category)
 
-	p.Link = r.Replace(l)
+	p.Link = Root + r.Replace(Permalink)
 	return p
 }
 

@@ -5,7 +5,7 @@ excerpt_link = "Read More"
 sidebar = "right"
 
 # Favicon
-favicon = "/favicon.ico"
+favicon = "favicon.ico"
 
 # Menu
 [[menu]]

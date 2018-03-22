@@ -53,7 +53,7 @@ func (s *Site) Build() {
 	// backup
 	var posts = s.Posts
 	if s.PageNav.PageCount > 1 {
-		s.NextPageIndex = 2
+		s.NextPageIndex = s.CurrentPageIndex+1
 		s.Posts = posts[:s.Cfg.PerPage]
 	}
 

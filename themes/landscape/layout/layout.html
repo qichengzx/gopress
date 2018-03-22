@@ -39,7 +39,11 @@
 					{{ $PrevPageIndex := .PrevPageIndex }}
 					{{ $PaginationDir := .Cfg.PaginationDir }}
 					{{ if gt $currentPageIndex 1 }}
+						{{ if eq $PrevPageIndex 1 }}
+						<a class="extend prev" rel="prev" href="{{ $root }}">« Prev</a>
+						{{ else }}
                         <a class="extend prev" rel="prev" href="{{ $root }}{{ $PaginationDir }}/{{ $PrevPageIndex }}/">« Prev</a>
+                        {{ end }}
 					{{ end }}
 
 					{{range $i := .PageNav.PageSlice }}

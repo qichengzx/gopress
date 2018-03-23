@@ -44,16 +44,16 @@ const (
 
 func (s *Site) Build() {
 	s.CurrentPage = PageTypeIndex
-	count := len(s.Posts)
+	postCount := len(s.Posts)
 
 	s.CurrentPageIndex = 1
-	s.makePagnition(count, s.Cfg.PerPage)
+	s.makePagnition(postCount, s.Cfg.PerPage)
 	s.copyRight()
 
 	// backup
 	var posts = s.Posts
 	if s.PageNav.PageCount > 1 {
-		s.NextPageIndex = s.CurrentPageIndex+1
+		s.NextPageIndex = s.CurrentPageIndex + 1
 		s.Posts = posts[:s.Cfg.PerPage]
 	}
 
@@ -65,14 +65,21 @@ func (s *Site) Build() {
 
 	if s.PageNav.PageCount > 0 {
 		for i := s.Cfg.PerPage; i <= s.PageNav.PageCount; i++ {
-			s.Posts = posts[i*s.Cfg.PerPage-s.Cfg.PerPage : i*s.Cfg.PerPage]
+			//It's not good enough
+			lastIndex := 0
+			if i*s.Cfg.PerPage > postCount {
+				lastIndex = postCount
+			} else {
+				lastIndex = i * s.Cfg.PerPage
+			}
+
+			s.Posts = posts[i*s.Cfg.PerPage-s.Cfg.PerPage : lastIndex]
 			s.CurrentPageIndex = i
 			s.NextPageIndex = i + 1
 			s.PrevPageIndex = i - 1
 			bt := s.renderPage()
 
 			p := strconv.Itoa(i)
-
 			makeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.PaginationDir, p, indexPage))
 		}
 	}

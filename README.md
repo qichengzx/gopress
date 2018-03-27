@@ -1,4 +1,4 @@
-X(for now)
+gopress
 ----
 
 This is a fast blog framework,powered by [Go](https://golang.org)
@@ -13,11 +13,14 @@ It is currently under development.
 ## Installation
 
 ```bash
-go get github.com/qichengzx/x
+go get github.com/qichengzx/gopress
 ```
 
 ## Quick Start
 
+```bash
+gopress
+```
 
 ## License
 

@@ -7,9 +7,9 @@ import (
 	"path/filepath"
 	"strings"
 	"time"
-	"x/config"
-	"x/post"
-	"x/xlib"
+	"gopress/config"
+	"gopress/post"
+	"gopress/xlib"
 )
 
 var (

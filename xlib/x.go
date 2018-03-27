@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 	"strconv"
 	"time"
-	"x/config"
-	"x/post"
+	"gopress/config"
+	"gopress/post"
 )
 
 type Site struct {

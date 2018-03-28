@@ -40,6 +40,7 @@ const (
 	PageTypeTag   = "tag"
 	PageTypeCat   = "category"
 	PageTypePost  = "post"
+	PageTypeArh   = "archive"
 )
 
 func (s *Site) Build() {
@@ -116,6 +117,10 @@ func (s *Site) Build() {
 		bt := s.renderPage()
 		makeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.TagDir, tag, indexPage))
 	}
+
+	//Archive
+	s.CurrentPage = PageTypeArh
+	//TODO render archives page
 
 	s.style()
 }

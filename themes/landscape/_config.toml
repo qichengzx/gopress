@@ -12,5 +12,8 @@ favicon = "favicon.ico"
 title = "Home"
 url = "/"
 [[menu]]
+title = "Archives"
+url = "/archives"
+[[menu]]
 title = "GitHub"
 url = "https://github.com"

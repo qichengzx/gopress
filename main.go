@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
+	"gopress/config"
+	"gopress/post"
+	"gopress/xlib"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
 	"time"
-	"gopress/config"
-	"gopress/post"
-	"gopress/xlib"
 )
 
 var (
@@ -50,6 +50,7 @@ func main() {
 	s.TagPosts = pw.TagPosts
 	s.Tags = post.WordToMAP(tagStr)
 	s.Categories = post.WordToMAP(cateStr)
+	s.Archives = pw.Archives
 
 	s.Build()
 }

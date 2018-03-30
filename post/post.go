@@ -17,6 +17,7 @@ type PostWarp struct {
 	Posts    []Post
 	CatPosts map[string][]Post
 	TagPosts map[string][]Post
+	Archives map[string][]Post
 }
 
 type Post struct {
@@ -56,6 +57,7 @@ func getPostlist(path string) (PostWarp, []string, []string) {
 	)
 	var cat = map[string][]Post{}
 	var tag = map[string][]Post{}
+	var arh = map[string][]Post{}
 
 	err := filepath.Walk(path, func(path string, f os.FileInfo, err error) error {
 		var p = Post{}
@@ -82,6 +84,9 @@ func getPostlist(path string) (PostWarp, []string, []string) {
 
 		cat[p.Category] = append(cat[p.Category], p)
 
+		m := formatMonth(p.Date)
+		arh[m] = append(arh[m], p)
+
 		pw.Posts = append(pw.Posts, p)
 		cates = append(cates, p.Category)
 
@@ -100,6 +105,7 @@ func getPostlist(path string) (PostWarp, []string, []string) {
 	pw.CatPosts = cat
 	pw.Posts = SortPost(pw.Posts)
 	pw.TagPosts = tag
+	pw.Archives = arh
 	return pw, tags, cates
 }
 
@@ -169,6 +175,14 @@ func getContent(c []byte) template.HTML {
 	str := blackfriday.MarkdownCommon([]byte(content))
 
 	return template.HTML(str)
+}
+
+func formatMonth(layout string) string {
+	t, err := time.Parse("2006-01-02 15:04:05", layout)
+	if err != nil {
+		panic(err)
+	}
+	return t.Format("2006-01")
 }
 
 func formatDate(layout string) string {

@@ -2,20 +2,21 @@ package xlib
 
 import (
 	"bytes"
+	"gopress/config"
+	"gopress/post"
 	"html/template"
 	"io/ioutil"
 	"math"
 	"path/filepath"
 	"strconv"
 	"time"
-	"gopress/config"
-	"gopress/post"
 )
 
 type Site struct {
 	Posts      []post.Post
 	CatPosts   map[string][]post.Post
 	TagPosts   map[string][]post.Post
+	Archives   map[string][]post.Post
 	Categories map[string]int
 	Tags       map[string]int
 
@@ -40,7 +41,7 @@ const (
 	PageTypeTag   = "tag"
 	PageTypeCat   = "category"
 	PageTypePost  = "post"
-	PageTypeArh   = "archive"
+	PageTypeArh   = "archives"
 )
 
 func (s *Site) Build() {
@@ -120,7 +121,8 @@ func (s *Site) Build() {
 
 	//Archive
 	s.CurrentPage = PageTypeArh
-	//TODO render archives page
+	bt = s.renderPage()
+	makeFile(bt, filepath.Join(s.Cfg.PublicDir, PageTypeArh, indexPage))
 
 	s.style()
 }

@@ -18,7 +18,7 @@
 	{{ $post := index .Posts .CurrentPageIndex }}
 	{{ $post.Title }} - {{ .Cfg.Title }}
 {{ else if eq .CurrentPage "archives" }}
-	归档 - {{ .Cfg.Title }}
+	Archives: {{ .CurrentPageTitle }} - {{ .Cfg.Title }}
 {{ end }}
 </title>
 {{ template "head" . }}
@@ -87,16 +87,14 @@
 			</section>
 			{{ else if eq .CurrentPage "archives" }}
 			<section class="archives-wrap">
-				{{ range $m, $posts := .Archives }}
                 <div class="archive-title-wrap">
-                    <span class="archive-title">{{ $m }}</span>
+                    <span class="archive-title">{{ .CurrentPageTitle }}</span>
                 </div>
 				<div class="archives">
-					{{ range $post := $posts }}
-					{{ template "archive-post" $post }}
-					{{ end }}
-				</div>
+				{{ range $post := .Posts }}
+				{{ template "archive-post" $post }}
 				{{ end }}
+				</div>
 			</section>
 			{{ else if eq .CurrentPage "post" }}
 				{{ $post := index .Posts .CurrentPageIndex }}

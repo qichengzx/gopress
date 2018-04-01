@@ -119,10 +119,26 @@ func (s *Site) Build() {
 		makeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.TagDir, tag, indexPage))
 	}
 
-	//Archive
+	//Archived by year
+	yearArchive := post.GenArchive(posts)
 	s.CurrentPage = PageTypeArh
-	bt = s.renderPage()
-	makeFile(bt, filepath.Join(s.Cfg.PublicDir, PageTypeArh, indexPage))
+	for year, posts := range yearArchive {
+		s.Posts = posts
+		s.CurrentPageTitle = year
+
+		bt = s.renderPage()
+		makeFile(bt, filepath.Join(s.Cfg.PublicDir, PageTypeArh, year, indexPage))
+	}
+
+	//Archived by month
+	s.CurrentPage = PageTypeArh
+	for m, posts := range s.Archives {
+		s.Posts = posts
+		s.CurrentPageTitle = m
+
+		bt = s.renderPage()
+		makeFile(bt, filepath.Join(s.Cfg.PublicDir, PageTypeArh, m, indexPage))
+	}
 
 	s.style()
 }

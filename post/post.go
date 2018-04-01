@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -177,12 +178,23 @@ func getContent(c []byte) template.HTML {
 	return template.HTML(str)
 }
 
+func GenArchive(posts []Post) map[string][]Post {
+	var arh = map[string][]Post{}
+
+	for _, post := range posts {
+		key := strconv.Itoa(post.Year)
+		arh[key] = append(arh[key], post)
+	}
+
+	return arh
+}
+
 func formatMonth(layout string) string {
 	t, err := time.Parse("2006-01-02 15:04:05", layout)
 	if err != nil {
 		panic(err)
 	}
-	return t.Format("2006-01")
+	return t.Format("2006/01")
 }
 
 func formatDate(layout string) string {

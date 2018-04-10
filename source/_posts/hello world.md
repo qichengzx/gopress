@@ -18,3 +18,8 @@ gopress is a fast blog framework,powered by [Go](https://golang.org), It's fast 
 This is a image
 
 ![gophers](https://cdn-images-1.medium.com/max/1600/0*fyyS1OHEaQ2il8Tg.png)
+
+
+and this is a local image
+
+![hello go](/images/go.png)

@@ -5,7 +5,6 @@ import (
 	"gopress/config"
 	"gopress/post"
 	"html/template"
-	"io/ioutil"
 	"math"
 	"path/filepath"
 	"strconv"
@@ -141,6 +140,7 @@ func (s *Site) Build() {
 	}
 
 	s.style()
+	s.asset()
 }
 
 func (s *Site) makePagnition(count int, perPage int) *Site {
@@ -172,12 +172,14 @@ func (s *Site) renderPage() []byte {
 
 // TODO minify style.css
 func (s *Site) style() {
-	stylePath := filepath.Join(ThemeDir, s.Cfg.Theme, "/style.css")
-	data, err := ioutil.ReadFile(stylePath)
+	CopyFile(filepath.Join(ThemeDir, s.Cfg.Theme, "/style.css"), filepath.Join(s.Cfg.PublicDir, "style.css"))
+}
+
+func (s *Site) asset() {
+	err := CopyDir(filepath.Join(s.Cfg.SourceDir, "../images"), filepath.Join(s.Cfg.PublicDir, "images"))
 	if err != nil {
 		panic(err)
 	}
-	ioutil.WriteFile(s.Cfg.PublicDir+"/style.css", data, 0644)
 }
 
 func (s *Site) copyRight() *Site {

@@ -139,8 +139,7 @@ func (s *Site) Build() {
 		makeFile(bt, filepath.Join(s.Cfg.PublicDir, PageTypeArh, m, indexPage))
 	}
 
-	s.style()
-	s.asset()
+	s.copyAsset()
 }
 
 func (s *Site) makePagnition(count int, perPage int) *Site {
@@ -170,13 +169,13 @@ func (s *Site) renderPage() []byte {
 	return []byte(doc.String())
 }
 
-// TODO minify style.css
-func (s *Site) style() {
-	CopyFile(filepath.Join(ThemeDir, s.Cfg.Theme, "/style.css"), filepath.Join(s.Cfg.PublicDir, "style.css"))
-}
-
-func (s *Site) asset() {
+func (s *Site) copyAsset() {
 	err := CopyDir(filepath.Join(s.Cfg.SourceDir, "../images"), filepath.Join(s.Cfg.PublicDir, "images"))
+	if err != nil {
+		panic(err)
+	}
+
+	err = CopyDir(filepath.Join(ThemeDir, s.Cfg.Theme, "css"), filepath.Join(s.Cfg.PublicDir, "css"))
 	if err != nil {
 		panic(err)
 	}

@@ -166,7 +166,7 @@ func (s *Site) renderPage() []byte {
 	}
 	tmpl.ExecuteTemplate(&doc, "layout", s)
 
-	return []byte(doc.String())
+	return doc.Bytes()
 }
 
 func (s *Site) copyAsset() {

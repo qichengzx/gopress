@@ -2,8 +2,8 @@ package xlib
 
 import (
 	"bytes"
-	"gopress/config"
-	"gopress/post"
+	"github.com/qichengzx/gopress/config"
+	"github.com/qichengzx/gopress/post"
 	"html/template"
 	"math"
 	"path/filepath"

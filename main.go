@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"gopress/config"
-	"gopress/post"
-	"gopress/xlib"
+	"github.com/qichengzx/gopress/config"
+	"github.com/qichengzx/gopress/post"
+	"github.com/qichengzx/gopress/xlib"
 	"log"
 	"os"
 	"path/filepath"

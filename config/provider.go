@@ -19,6 +19,7 @@ type Config struct {
 	PublicDir   string `toml:"public_dir"`
 	TagDir      string `toml:"tag_dir"`
 	CategoryDir string `toml:"category_dir"`
+	ArchiveDir  string `toml:"archive_dir"`
 
 	DefaultCategory string `toml:"default_category"`
 

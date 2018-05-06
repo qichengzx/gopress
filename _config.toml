@@ -15,6 +15,7 @@ source_dir = "source/_posts"
 public_dir = "public"
 tag_dir = "tags"
 category_dir = "categories"
+archive_dir = "archives"
 
 # Category & Tag
 default_category = "default"

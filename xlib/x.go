@@ -66,7 +66,6 @@ func (s *Site) Build() {
 
 	if s.PageNav.PageCount > 0 {
 		for i := s.Cfg.PerPage; i <= s.PageNav.PageCount; i++ {
-			//It's not good enough
 			lastIndex := 0
 			if i*s.Cfg.PerPage > postCount {
 				lastIndex = postCount
@@ -126,7 +125,7 @@ func (s *Site) Build() {
 		s.CurrentPageTitle = year
 
 		bt = s.renderPage()
-		makeFile(bt, filepath.Join(s.Cfg.PublicDir, PageTypeArh, year, indexPage))
+		makeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.ArchiveDir, year, indexPage))
 	}
 
 	//Archived by month
@@ -136,7 +135,7 @@ func (s *Site) Build() {
 		s.CurrentPageTitle = m
 
 		bt = s.renderPage()
-		makeFile(bt, filepath.Join(s.Cfg.PublicDir, PageTypeArh, m, indexPage))
+		makeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.ArchiveDir, m, indexPage))
 	}
 
 	s.copyAsset()

@@ -37,6 +37,19 @@
 			{{ else if eq .CurrentPage "post" }}
 				{{ $post := index .Posts .CurrentPageIndex }}
 				{{ template "article" $post }}
+			{{ else if eq .CurrentPage "archiveIndex" }}
+				<section class="archives-wrap">
+					{{ range $year,$posts := .Archives }}
+					<div class="archive-title-wrap">
+						<span class="archive-title">{{ $year }}</span>
+					</div>
+					<div class="archives">
+					{{ range $post := $posts }}
+					{{ template "archive-post" $post }}
+					{{ end }}
+					</div>
+					{{ end }}
+				</section>
 			{{ else }}
 				{{ template "archive" . }}
 			{{ end }}

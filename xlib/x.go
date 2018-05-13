@@ -26,6 +26,8 @@ type Site struct {
 	NextPageIndex    int
 	PageNav          *PageNav
 
+	CurrentPost post.Post
+
 	Cfg      *config.Config
 	ThemeCfg *config.ThemeCfg
 
@@ -88,8 +90,19 @@ func (s *Site) Build() {
 	s.Posts = posts
 	s.CurrentPage = PageTypePost
 	for i, p := range s.Posts {
+
+		if i == 0 {
+			p.SetNav(nil, &s.Posts[i+1])
+		} else if i == postCount-1 {
+			p.SetNav(&s.Posts[i-1], nil)
+		} else {
+			p.SetNav(&s.Posts[i-1], &s.Posts[i+1])
+		}
+
 		p.Index = i
 		s.CurrentPageIndex = i
+		s.CurrentPost = p
+
 		bt := s.renderPage()
 
 		makeFile(bt, filepath.Join(s.Cfg.PublicDir, p.Link))
@@ -161,7 +174,7 @@ func (s *Site) makePagnition(count int, perPage int) *Site {
 	return s
 }
 
-func (s *Site) renderPage() []byte {
+func (s Site) renderPage() []byte {
 	var doc bytes.Buffer
 
 	var t = filepath.Join(ThemeDir, s.Cfg.Theme, "/layout/*.html")
@@ -174,7 +187,7 @@ func (s *Site) renderPage() []byte {
 	return doc.Bytes()
 }
 
-func (s *Site) copyAsset() {
+func (s Site) copyAsset() {
 	err := CopyDir(filepath.Join(s.Cfg.SourceDir, "../images"), filepath.Join(s.Cfg.PublicDir, "images"))
 	if err != nil {
 		panic(err)

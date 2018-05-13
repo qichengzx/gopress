@@ -35,8 +35,8 @@
 				{{ template "nav" . }}
 				{{ end }}
 			{{ else if eq .CurrentPage "post" }}
-				{{ $post := index .Posts .CurrentPageIndex }}
-				{{ template "article" $post }}
+				{{ template "article" .CurrentPost }}
+
 			{{ else if eq .CurrentPage "archiveIndex" }}
 				<section class="archives-wrap">
 					{{ range $year,$posts := .Archives }}

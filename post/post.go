@@ -32,6 +32,18 @@ type Post struct {
 	Content  template.HTML
 	Link     string
 	Index    int
+
+	PostNav PostNav
+}
+
+type PostNav struct {
+	Prev Nav
+	Next Nav
+}
+
+type Nav struct {
+	Title string
+	Link  string
 }
 
 type Tag struct {
@@ -161,6 +173,40 @@ func (p *Post) setUnixtime() *Post {
 
 func (p *Post) setYear() *Post {
 	p.Year = formatYear(p.Date)
+	return p
+}
+
+func (p *Post) SetNav(p1, p2 *Post) *Post {
+	if p1 == nil {
+		p.PostNav = PostNav{
+			Prev: Nav{
+				Title: p2.Title,
+				Link:  p2.Link,
+			},
+			Next: Nav{},
+		}
+	} else if p2 == nil {
+		p.PostNav = PostNav{
+			Prev: Nav{},
+			Next: Nav{
+				Title: p1.Title,
+				Link:  p1.Link,
+			},
+		}
+	} else {
+
+		p.PostNav = PostNav{
+			Prev: Nav{
+				Title: p2.Title,
+				Link:  p2.Link,
+			},
+			Next: Nav{
+				Title: p1.Title,
+				Link:  p1.Link,
+			},
+		}
+	}
+
 	return p
 }
 

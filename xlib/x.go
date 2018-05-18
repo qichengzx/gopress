@@ -18,6 +18,7 @@ type Site struct {
 	Archives   map[string][]post.Post
 	Categories map[string]int
 	Tags       map[string]int
+	Recent 	   []post.Post
 
 	CurrentPage      string
 	CurrentPageTitle string

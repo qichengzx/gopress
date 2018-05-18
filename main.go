@@ -52,5 +52,12 @@ func main() {
 	s.Categories = post.WordToMAP(cateStr)
 	s.Archives = pw.Archives
 
+	l := len(s.Posts)
+	if l > 5 {
+		s.Recent = s.Posts[:5]
+	} else {
+		s.Recent = s.Posts
+	}
+
 	s.Build()
 }

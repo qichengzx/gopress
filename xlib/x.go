@@ -89,10 +89,16 @@ func (s *Site) Build() {
 	//文章页
 	s.Posts = posts
 	s.CurrentPage = PageTypePost
+	l := len(s.Posts)
 	for i, p := range s.Posts {
 
 		if i == 0 {
-			p.SetNav(nil, &s.Posts[i+1])
+			if l > 1 {
+				p.SetNav(nil, &s.Posts[i+1])
+			} else {
+				p.PostNav = post.PostNav{Next: post.Nav{},Prev:post.Nav{}}
+			}
+
 		} else if i == postCount-1 {
 			p.SetNav(&s.Posts[i-1], nil)
 		} else {

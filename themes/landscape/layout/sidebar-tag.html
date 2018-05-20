@@ -3,12 +3,12 @@
                 <div class="widget-wrap">
                     <h3 class="widget-title">Tags</h3>
                     <div class="widget">
-                        <ul class="category-list">
+                        <ul class="tag-list">
                         {{ $TagDir := .Cfg.TagDir }}
                         {{ range $tag, $count := .Tags }}
-                            <li class="category-list-item">
-                                <a class="category-list-link" href="/{{ $TagDir }}/{{ $tag }}/">{{ $tag }}</a>
-                                <span class="category-list-count">{{ $count }}</span>
+                            <li class="tag-list-item">
+                                <a class="tag-list-link" href="/{{ $TagDir }}/{{ $tag }}/">{{ $tag }}</a>
+                                <span class="tag-list-count">{{ $count }}</span>
                             </li>
                         {{ end }}
                         </ul>

@@ -3,12 +3,12 @@
             <div class="widget-wrap">
                 <h3 class="widget-title">Archives</h3>
                 <div class="widget">
-                    <ul class="category-list">
+                    <ul class="archive-list">
                     {{ $ArchiveDir := .Cfg.ArchiveDir }}
                     {{ range $month, $post := .Archives }}
-                        <li class="category-list-item">
-                            <a class="category-list-link" href="/{{ $ArchiveDir }}/{{ $month }}">{{ $month }}</a>
-                            <span class="category-list-count">{{ len $post }}</span>
+                        <li class="archive-list-item">
+                            <a class="archive-list-link" href="/{{ $ArchiveDir }}/{{ $month }}">{{ $month }}</a>
+                            <span class="archive-list-count">{{ len $post }}</span>
                         </li>
                     {{ end }}
                     </ul>

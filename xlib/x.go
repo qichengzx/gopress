@@ -3,6 +3,7 @@ package xlib
 import (
 	"bytes"
 	"github.com/qichengzx/gopress/config"
+	"github.com/qichengzx/gopress/plugins/sitemap"
 	"github.com/qichengzx/gopress/post"
 	"html/template"
 	"math"
@@ -18,7 +19,7 @@ type Site struct {
 	Archives   map[string][]post.Post
 	Categories map[string]int
 	Tags       map[string]int
-	Recent 	   []post.Post
+	Recent     []post.Post
 
 	CurrentPage      string
 	CurrentPageTitle string
@@ -97,7 +98,7 @@ func (s *Site) Build() {
 			if l > 1 {
 				p.SetNav(nil, &s.Posts[i+1])
 			} else {
-				p.PostNav = post.PostNav{Next: post.Nav{},Prev:post.Nav{}}
+				p.PostNav = post.PostNav{Next: post.Nav{}, Prev: post.Nav{}}
 			}
 
 		} else if i == postCount-1 {
@@ -165,6 +166,9 @@ func (s *Site) Build() {
 	makeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.ArchiveDir, indexPage))
 
 	s.copyAsset()
+
+	render := sitemap.NewRender(s.Cfg.PublicDir, s.Cfg.Url)
+	render.Go()
 }
 
 func (s *Site) makePagnition(count int, perPage int) *Site {

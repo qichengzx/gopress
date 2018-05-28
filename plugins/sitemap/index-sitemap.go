@@ -6,6 +6,7 @@ import (
 	"text/template"
 )
 
+var maps = []string{"post-sitemap.xml", "page-sitemap.xml", "category-sitemap.xml", "tag-sitemap.xml"}
 var indexSitemap = "sitemap.xml"
 var indexSitemapTmpl = `<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="sitemap.xsl"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -18,7 +19,7 @@ var indexSitemapTmpl = `<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet t
 	{{ end }}
 </sitemapindex>`
 
-//TODO Lastmod 
+//TODO Lastmod
 func (s Sitemap) indexSitemap() {
 	var bf bytes.Buffer
 	var indexMap = []IndexMap{}

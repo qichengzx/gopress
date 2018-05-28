@@ -167,8 +167,9 @@ func (s *Site) Build() {
 
 	s.copyAsset()
 
+	s.Posts = posts
 	render := sitemap.NewRender(s.Cfg.PublicDir, s.Cfg.Url)
-	render.Go()
+	render.Go(s.postMap())
 }
 
 func (s *Site) makePagnition(count int, perPage int) *Site {

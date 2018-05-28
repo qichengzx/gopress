@@ -6,8 +6,6 @@ import (
 	"path/filepath"
 )
 
-var maps = []string{"post-sitemap.xml", "page-sitemap.xml", "category-sitemap.xml", "tag-sitemap.xml"}
-
 type Sitemap struct {
 	RootPath   string
 	SiteDomain string
@@ -39,8 +37,9 @@ func NewRender(path, domain string) Sitemap {
 	return Sitemap
 }
 
-func (sm Sitemap) Go() {
+func (sm Sitemap) Go(post []Item) {
 	sm.indexSitemap()
+	sm.postSitemap(post)
 }
 
 func makeFile(c []byte, file string) {

@@ -52,7 +52,7 @@ func (s *Site) Build() {
 	postCount := len(s.Posts)
 
 	s.CurrentPageIndex = 1
-	s.makePagnition(postCount, s.Cfg.PerPage)
+	s.makePagnition(postCount)
 	s.copyRight()
 
 	// backup
@@ -64,8 +64,8 @@ func (s *Site) Build() {
 
 	// TODO clear public dir only when generate page was success
 	clearDir(s.Cfg.PublicDir)
-	bt := s.renderPage()
 
+	bt := s.renderPage()
 	makeFile(bt, filepath.Join(s.Cfg.PublicDir, indexPage))
 
 	if s.PageNav.PageCount > 0 {
@@ -91,11 +91,10 @@ func (s *Site) Build() {
 	//文章页
 	s.Posts = posts
 	s.CurrentPage = PageTypePost
-	l := len(s.Posts)
 	for i, p := range s.Posts {
 
 		if i == 0 {
-			if l > 1 {
+			if postCount > 1 {
 				p.SetNav(nil, &s.Posts[i+1])
 			} else {
 				p.PostNav = post.PostNav{Next: post.Nav{}, Prev: post.Nav{}}
@@ -172,11 +171,11 @@ func (s *Site) Build() {
 	render.Go(s.postMap())
 }
 
-func (s *Site) makePagnition(count int, perPage int) *Site {
+func (s *Site) makePagnition(count int) *Site {
 	pageCount := float64(0)
 
-	if count > perPage {
-		pageCount = math.Ceil(float64(count) / float64(perPage))
+	if count > s.Cfg.PerPage {
+		pageCount = math.Ceil(float64(count) / float64(s.Cfg.PerPage))
 	}
 
 	var pn = PageNav{}

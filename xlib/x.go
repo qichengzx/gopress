@@ -7,8 +7,10 @@ import (
 	"github.com/qichengzx/gopress/post"
 	"html/template"
 	"math"
+	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -47,13 +49,51 @@ const (
 	PageTypeArh   = "archives"
 )
 
+func New(cfFile string) *Site {
+	var cfg = config.NewProvider(cfFile)
+	var themeCfg = config.ThemeCfgProvider(filepath.Join(ThemeDir, cfg.Theme, cfFile))
+
+	appPath, _ := os.Getwd()
+	postPath := filepath.Join(appPath, cfg.SourceDir)
+
+	post.Root = cfg.Root
+	post.Permalink = cfg.Permalink
+
+	pw, tags, cates := post.GetPosts(postPath)
+	var Recent []post.Post
+	if len(pw.Posts) > 5 {
+		Recent = pw.Posts[:5]
+	} else {
+		Recent = pw.Posts
+	}
+
+	tagStr := strings.Join(tags, " ")
+	cateStr := strings.Join(cates, " ")
+
+	return &Site{
+		Posts:      pw.Posts,
+		CatPosts:   pw.CatPosts,
+		TagPosts:   pw.TagPosts,
+		Archives:   pw.Archives,
+		Categories: post.WordToMAP(cateStr),
+		Tags:       post.WordToMAP(tagStr),
+		Recent:     Recent,
+
+		CurrentPage:      PageTypeIndex,
+		CurrentPageIndex: 1,
+
+		Cfg:       cfg,
+		ThemeCfg:  themeCfg,
+		CopyRight: copyRight(),
+	}
+}
+
 func (s *Site) Build() {
 	s.CurrentPage = PageTypeIndex
 	postCount := len(s.Posts)
 
 	s.CurrentPageIndex = 1
 	s.makePagnition(postCount)
-	s.copyRight()
 
 	// backup
 	var posts = s.Posts
@@ -210,7 +250,6 @@ func (s Site) copyAsset() {
 	}
 }
 
-func (s *Site) copyRight() *Site {
-	s.CopyRight = time.Now().Format("2006")
-	return s
+func copyRight() string {
+	return time.Now().Format("2006")
 }

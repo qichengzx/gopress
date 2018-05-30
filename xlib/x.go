@@ -42,11 +42,12 @@ const (
 	indexPage = "index.html"
 	ThemeDir  = "themes"
 
-	PageTypeIndex = "index"
-	PageTypeTag   = "tag"
-	PageTypeCat   = "category"
-	PageTypePost  = "post"
-	PageTypeArh   = "archives"
+	PageTypeIndex  = "index"
+	PageTypeTag    = "tag"
+	PageTypeCat    = "category"
+	PageTypePost   = "post"
+	PageTypeArh    = "archives"
+	PageTypeArhIdx = "archiveIndex"
 )
 
 func New(cfFile string) *Site {
@@ -132,7 +133,6 @@ func (s *Site) Build() {
 	s.Posts = posts
 	s.CurrentPage = PageTypePost
 	for i, p := range s.Posts {
-
 		if i == 0 {
 			if postCount > 1 {
 				p.SetNav(nil, &s.Posts[i+1])
@@ -199,7 +199,7 @@ func (s *Site) Build() {
 	}
 
 	//Archive Index Page
-	s.CurrentPage = "archiveIndex"
+	s.CurrentPage = PageTypeArhIdx
 	s.Archives = yearArchive
 	bt = s.renderPage()
 	makeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.ArchiveDir, indexPage))

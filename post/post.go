@@ -89,11 +89,11 @@ func getPostlist(path string) (PostWarp, []string, []string) {
 
 		fileID := fileName(f.Name())
 
-		p.setID()
-		p.setContent(path)
-		p.setYear()
-		p.setUnixtime()
-		p.setLink(fileID)
+		p.setID().
+			setContent(path).
+			setYear().
+			setUnixtime().
+			setLink(fileID)
 
 		cat[p.Category] = append(cat[p.Category], p)
 

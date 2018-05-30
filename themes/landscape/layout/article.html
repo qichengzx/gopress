@@ -5,7 +5,7 @@
                             <time itemprop="datePublished">{{ .Date }}</time>
                         </a>
                         <div class="article-category">
-                            <a class="article-category-link" href="">{{ .Category }}</a>
+                            <a class="article-category-link" href="/categories/{{ .Category }}">{{ .Category }}</a>
                         </div>
                     </div>
                     <div class="article-inner">
@@ -23,7 +23,7 @@
                             <ul class="article-tag-list">
                             {{ range $tag := .Tags}}
                                 <li class="article-tag-list-item">
-                                    <a class="article-tag-list-link" href="">{{ $tag }}</a>
+                                    <a class="article-tag-list-link" href="/tags/{{ $tag }}">{{ $tag }}</a>
                                 </li>
                             {{ end }}
                             </ul>

@@ -22,10 +22,8 @@ type IndexMap struct {
 }
 
 type Item struct {
-	Permalink  string
-	Lastmod    string
-	Changefreq string
-	Priority   float32
+	Permalink string
+	Lastmod   string
 }
 
 func NewRender(path, domain string) Sitemap {
@@ -37,9 +35,10 @@ func NewRender(path, domain string) Sitemap {
 	return Sitemap
 }
 
-func (sm Sitemap) Go(post []Item) {
+func (sm Sitemap) Go(post []Item, category []Item) {
 	sm.indexSitemap()
 	sm.postSitemap(post)
+	sm.categorySitemap(category)
 }
 
 func makeFile(c []byte, file string) {

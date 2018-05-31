@@ -18,3 +18,18 @@ func (s *Site) postMap() []sitemap.Item {
 
 	return items
 }
+
+func (s *Site) categoryMap() []sitemap.Item {
+	var items = []sitemap.Item{}
+
+	for cate, post := range s.CatPosts {
+		var item = sitemap.Item{
+			Permalink: cate,
+			Lastmod:   post[len(post)-1].Date,
+		}
+
+		items = append(items, item)
+	}
+
+	return items
+}

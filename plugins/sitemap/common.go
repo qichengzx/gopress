@@ -2,17 +2,16 @@ package sitemap
 
 import (
 	"io/ioutil"
-	"os"
-	"path/filepath"
 )
 
 type Sitemap struct {
 	RootPath   string
 	SiteDomain string
+
 	//Maps is for index-sitemap.xml
+	IndexMap []IndexMap
 
 	//Items is for category,tag,etc...
-	IndexMap []IndexMap
 	Items    []Item
 }
 
@@ -42,9 +41,6 @@ func (sm Sitemap) Go(post []Item, category []Item) {
 }
 
 func makeFile(c []byte, file string) {
-	dir := filepath.Dir(file)
-	os.MkdirAll(dir, 0777)
-
 	err := ioutil.WriteFile(file, c, 0644)
 	if err != nil {
 		panic(err)

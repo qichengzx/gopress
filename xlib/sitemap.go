@@ -5,7 +5,7 @@ import (
 )
 
 func (s *Site) postMap() []sitemap.Item {
-	var items = []sitemap.Item{}
+	var items = make([]sitemap.Item, len(s.Posts))
 
 	for _, post := range s.Posts {
 		var item = sitemap.Item{
@@ -20,7 +20,7 @@ func (s *Site) postMap() []sitemap.Item {
 }
 
 func (s *Site) categoryMap() []sitemap.Item {
-	var items = []sitemap.Item{}
+	var items = make([]sitemap.Item, len(s.CatPosts))
 
 	for cate, post := range s.CatPosts {
 		var item = sitemap.Item{

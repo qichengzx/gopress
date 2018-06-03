@@ -25,6 +25,7 @@ type Post struct {
 	ID       string
 	Title    string
 	Category string
+	Created  time.Time
 	Date     string
 	Year     int
 	Unixtime int64
@@ -91,6 +92,7 @@ func getPostlist(path string) (PostWarp, []string, []string) {
 
 		p.setID().
 			setContent(path).
+			setCreated().
 			setYear().
 			setUnixtime().
 			setLink(fileID)
@@ -173,6 +175,11 @@ func (p *Post) setUnixtime() *Post {
 
 func (p *Post) setYear() *Post {
 	p.Year = formatYear(p.Date)
+	return p
+}
+
+func (p *Post) setCreated() *Post {
+	p.Created = formatUTC(p.Date)
 	return p
 }
 
@@ -273,4 +280,12 @@ func formatUnix(layout string) int64 {
 		panic(err)
 	}
 	return t.Unix()
+}
+
+func formatUTC(layout string) time.Time {
+	t, err := time.Parse("2006-01-02 15:04:05", layout)
+	if err != nil {
+		panic(err)
+	}
+	return t.UTC()
 }

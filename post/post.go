@@ -3,6 +3,7 @@ package post
 import (
 	"crypto/md5"
 	"encoding/hex"
+	"github.com/qichengzx/gopress/config"
 	"github.com/russross/blackfriday"
 	"gopkg.in/yaml.v2"
 	"html/template"
@@ -59,11 +60,11 @@ var (
 	Permalink string
 )
 
-func GetPosts(path string) (PostWarp, []string, []string) {
-	return getPostlist(path)
+func GetPosts(path string, cfg *config.Config) (PostWarp, []string, []string) {
+	return getPostlist(path, cfg)
 }
 
-func getPostlist(path string) (PostWarp, []string, []string) {
+func getPostlist(path string, cfg *config.Config) (PostWarp, []string, []string) {
 	var (
 		pw    PostWarp
 		tags  []string
@@ -96,6 +97,12 @@ func getPostlist(path string) (PostWarp, []string, []string) {
 			setYear().
 			setUnixtime().
 			setLink(fileID)
+
+		//TODO check if post doesn't have a category
+		//it will be set to default if not
+		if p.Category == "" {
+			p.Category = cfg.DefaultCategory
+		}
 
 		cat[p.Category] = append(cat[p.Category], p)
 

@@ -1,3 +1,4 @@
+// sitemap.go fenerate aitemap.xml for site
 package xlib
 
 import (

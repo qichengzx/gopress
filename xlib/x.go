@@ -60,7 +60,7 @@ func New(cfFile string) *Site {
 	post.Root = cfg.Root
 	post.Permalink = cfg.Permalink
 
-	pw, tags, cates := post.GetPosts(postPath)
+	pw, tags, cates := post.GetPosts(postPath, cfg)
 	var Recent []post.Post
 	if len(pw.Posts) > 5 {
 		Recent = pw.Posts[:5]

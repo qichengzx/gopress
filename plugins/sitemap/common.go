@@ -12,7 +12,7 @@ type Sitemap struct {
 	IndexMap []IndexMap
 
 	//Items is for category,tag,etc...
-	Items    []Item
+	Items []Item
 }
 
 type IndexMap struct {

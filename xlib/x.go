@@ -10,7 +10,6 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
-	"strings"
 	"time"
 )
 
@@ -57,9 +56,6 @@ func New(cfFile string) *Site {
 	appPath, _ := os.Getwd()
 	postPath := filepath.Join(appPath, cfg.SourceDir)
 
-	post.Root = cfg.Root
-	post.Permalink = cfg.Permalink
-
 	pw, tags, cates := post.GetPosts(postPath, cfg)
 	var Recent []post.Post
 	if len(pw.Posts) > 5 {
@@ -68,16 +64,13 @@ func New(cfFile string) *Site {
 		Recent = pw.Posts
 	}
 
-	tagStr := strings.Join(tags, " ")
-	cateStr := strings.Join(cates, " ")
-
 	return &Site{
 		Posts:      pw.Posts,
 		CatPosts:   pw.CatPosts,
 		TagPosts:   pw.TagPosts,
 		Archives:   pw.Archives,
-		Categories: post.WordToMAP(cateStr),
-		Tags:       post.WordToMAP(tagStr),
+		Categories: post.SliceToMAP(cates),
+		Tags:       post.SliceToMAP(tags),
 		Recent:     Recent,
 
 		CurrentPage:      PageTypeIndex,
@@ -150,7 +143,7 @@ func (s *Site) Build() {
 		s.CurrentPageIndex = i
 		s.CurrentPost = p
 
-		bt := s.renderPage()
+		bt = s.renderPage()
 
 		makeFile(bt, filepath.Join(s.Cfg.PublicDir, p.Link))
 	}
@@ -163,7 +156,7 @@ func (s *Site) Build() {
 		s.Posts = posts
 		s.CurrentPageTitle = cat
 
-		bt := s.renderPage()
+		bt = s.renderPage()
 		makeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.CategoryDir, cat, indexPage))
 	}
 
@@ -173,7 +166,7 @@ func (s *Site) Build() {
 		s.Posts = posts
 		s.CurrentPageTitle = tag
 
-		bt := s.renderPage()
+		bt = s.renderPage()
 		makeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.TagDir, tag, indexPage))
 	}
 
@@ -220,8 +213,9 @@ func (s *Site) makePagnition(count int) *Site {
 		pageCount = math.Ceil(float64(count) / float64(s.Cfg.PerPage))
 	}
 
-	var pn = PageNav{}
-	pn.PageCount = int(pageCount)
+	var pn = PageNav{
+		PageCount: int(pageCount),
+	}
 	s.PageNav = pn.Handler()
 
 	return s

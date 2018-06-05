@@ -56,15 +56,15 @@ var (
 	contentLine = 6
 	fileExt     = ".md"
 
-	Root      string
-	Permalink string
+	myCfg *config.Config
 )
 
 func GetPosts(path string, cfg *config.Config) (PostWarp, []string, []string) {
-	return getPostlist(path, cfg)
+	myCfg = cfg
+	return getPostlist(path)
 }
 
-func getPostlist(path string, cfg *config.Config) (PostWarp, []string, []string) {
+func getPostlist(path string) (PostWarp, []string, []string) {
 	var (
 		pw    PostWarp
 		tags  []string
@@ -98,10 +98,10 @@ func getPostlist(path string, cfg *config.Config) (PostWarp, []string, []string)
 			setUnixtime().
 			setLink(fileID)
 
-		//TODO check if post doesn't have a category
+		//TODO check if post have a category
 		//it will be set to default if not
 		if p.Category == "" {
-			p.Category = cfg.DefaultCategory
+			p.Category = myCfg.DefaultCategory
 		}
 
 		cat[p.Category] = append(cat[p.Category], p)
@@ -171,7 +171,7 @@ func (p *Post) setLink(fileName string) *Post {
 		":title", fileName,
 		":category", p.Category)
 
-	p.Link = Root + r.Replace(Permalink)
+	p.Link = myCfg.Root + r.Replace(myCfg.Permalink)
 	return p
 }
 

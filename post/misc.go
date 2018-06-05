@@ -1,12 +1,9 @@
 package post
 
-import "strings"
+func SliceToMAP(sl []string) map[string]int {
+	stmap := make(map[string]int)
 
-func WordToMAP(s string) map[string]int {
-	var stmap = make(map[string]int)
-	strs := strings.Fields(s)
-
-	for _, str := range strs {
+	for _, str := range sl {
 		index, ok := stmap[str]
 
 		if ok {

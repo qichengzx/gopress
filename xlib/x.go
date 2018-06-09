@@ -235,19 +235,14 @@ func (s Site) renderPage() []byte {
 }
 
 func (s Site) copyAsset() {
-	err := CopyDir(filepath.Join(s.Cfg.SourceDir, "../images"), filepath.Join(s.Cfg.PublicDir, "images"))
-	if err != nil {
-		panic(err)
+	assets := map[string]string{
+		filepath.Join(s.Cfg.SourceDir, "../images"): "images",
+		filepath.Join(ThemeDir, s.Cfg.Theme, "css"): "css",
+		filepath.Join(ThemeDir, s.Cfg.Theme, "js"): "js",
 	}
 
-	err = CopyDir(filepath.Join(ThemeDir, s.Cfg.Theme, "css"), filepath.Join(s.Cfg.PublicDir, "css"))
-	if err != nil {
-		panic(err)
-	}
-
-	err = CopyDir(filepath.Join(ThemeDir, s.Cfg.Theme, "js"), filepath.Join(s.Cfg.PublicDir, "js"))
-	if err != nil {
-		panic(err)
+	for src, dst := range assets{
+		CopyDir(src,filepath.Join(s.Cfg.PublicDir,dst))
 	}
 }
 

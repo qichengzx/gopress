@@ -244,6 +244,11 @@ func (s Site) copyAsset() {
 	if err != nil {
 		panic(err)
 	}
+
+	err = CopyDir(filepath.Join(ThemeDir, s.Cfg.Theme, "js"), filepath.Join(s.Cfg.PublicDir, "js"))
+	if err != nil {
+		panic(err)
+	}
 }
 
 func copyRight() string {

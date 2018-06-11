@@ -34,10 +34,11 @@ func NewRender(path, domain string) Sitemap {
 	return Sitemap
 }
 
-func (sm Sitemap) Go(post []Item, category []Item) {
+func (sm Sitemap) Go(post, category, tag []Item) {
 	sm.indexSitemap()
 	sm.postSitemap(post)
 	sm.categorySitemap(category)
+	sm.tagSitemap(tag)
 }
 
 func makeFile(c []byte, file string) {

@@ -201,7 +201,7 @@ func (s *Site) Build() {
 
 	s.Posts = posts
 	render := sitemap.NewRender(s.Cfg.PublicDir, s.Cfg.Url)
-	render.Go(s.postMap(), s.categoryMap())
+	render.Go(s.postMap(), s.categoryMap(), s.tagMap())
 
 	s.Atom()
 }
@@ -238,11 +238,11 @@ func (s Site) copyAsset() {
 	assets := map[string]string{
 		filepath.Join(s.Cfg.SourceDir, "../images"): "images",
 		filepath.Join(ThemeDir, s.Cfg.Theme, "css"): "css",
-		filepath.Join(ThemeDir, s.Cfg.Theme, "js"): "js",
+		filepath.Join(ThemeDir, s.Cfg.Theme, "js"):  "js",
 	}
 
-	for src, dst := range assets{
-		CopyDir(src,filepath.Join(s.Cfg.PublicDir,dst))
+	for src, dst := range assets {
+		CopyDir(src, filepath.Join(s.Cfg.PublicDir, dst))
 	}
 }
 

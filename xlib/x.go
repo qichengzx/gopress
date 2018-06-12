@@ -236,9 +236,10 @@ func (s Site) renderPage() []byte {
 
 func (s Site) copyAsset() {
 	assets := map[string]string{
-		filepath.Join(s.Cfg.SourceDir, "../images"): "images",
-		filepath.Join(ThemeDir, s.Cfg.Theme, "css"): "css",
-		filepath.Join(ThemeDir, s.Cfg.Theme, "js"):  "js",
+		filepath.Join(s.Cfg.SourceDir, "../images"):             "images",
+		filepath.Join(ThemeDir, s.Cfg.Theme, "source/css"):      "css",
+		filepath.Join(ThemeDir, s.Cfg.Theme, "source/js"):       "js",
+		filepath.Join(ThemeDir, s.Cfg.Theme, "source/fancybox"): "fancybox",
 	}
 
 	for src, dst := range assets {

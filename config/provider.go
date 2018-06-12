@@ -34,6 +34,7 @@ type Config struct {
 type ThemeCfg struct {
 	Menu        []Menu `toml:"menu"`
 	ExcerptLink string `toml:"excerpt_link"`
+	Fancybox    bool   `toml:"fancybox"`
 	Sidebar     string `toml:"sidebar"`
 	Favicon     string `toml:"favicon"`
 }

@@ -23,7 +23,15 @@
                     {{ if .Cfg.Rss }}
                         <a id="nav-rss-link" class="nav-icon" href="{{ .Cfg.Rss }}" title="RSS Feed"></a>
                     {{ end }}
+                        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
                     </nav>
+                    <div id="search-form-wrap">
+                        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+                            <input type="search" name="q" class="search-form-input" placeholder="Search">
+                            <button type="submit" class="search-form-submit">&#xF002;</button>
+                            <input type="hidden" name="sitesearch" value="{{ .Cfg.Url }}">
+                        </form>
+                    </div>
                 </div>
             </div>
         </header>

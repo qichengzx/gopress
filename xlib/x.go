@@ -51,7 +51,6 @@ const (
 
 func New(cfFile string) *Site {
 	var cfg = config.NewProvider(cfFile)
-	var themeCfg = config.ThemeCfgProvider(filepath.Join(ThemeDir, cfg.Theme, cfFile))
 
 	appPath, _ := os.Getwd()
 	postPath := filepath.Join(appPath, cfg.SourceDir)
@@ -77,7 +76,6 @@ func New(cfFile string) *Site {
 		CurrentPageIndex: 1,
 
 		Cfg:       cfg,
-		ThemeCfg:  themeCfg,
 		CopyRight: copyRight(),
 	}
 }

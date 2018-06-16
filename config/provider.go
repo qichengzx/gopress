@@ -2,6 +2,7 @@ package config
 
 import (
 	"github.com/BurntSushi/toml"
+	"path/filepath"
 )
 
 type Config struct {
@@ -28,7 +29,9 @@ type Config struct {
 	PerPage       int    `toml:"per_page"`
 	PaginationDir string `toml:"pagination_dir"`
 
-	Theme string `toml:"theme"`
+	ThemeDir string `toml:"theme_dir"`
+	Theme    string `toml:"theme"`
+	ThemeCfg ThemeCfg
 }
 
 type ThemeCfg struct {
@@ -50,14 +53,16 @@ func NewProvider(f string) *Config {
 		panic(err)
 	}
 
+	conf.ThemeCfg = themeCfgProvider(filepath.Join(conf.ThemeDir, conf.Theme, f))
+
 	return &conf
 }
 
-func ThemeCfgProvider(f string) *ThemeCfg {
+func themeCfgProvider(f string) ThemeCfg {
 	var conf ThemeCfg
 	if _, err := toml.DecodeFile(f, &conf); err != nil {
 		panic(err)
 	}
 
-	return &conf
+	return conf
 }

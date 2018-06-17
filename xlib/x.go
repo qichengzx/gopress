@@ -39,7 +39,6 @@ type Site struct {
 
 const (
 	indexPage = "index.html"
-	ThemeDir  = "themes"
 
 	PageTypeIndex  = "index"
 	PageTypeTag    = "tag"
@@ -222,7 +221,7 @@ func (s *Site) makePagnition(count int) *Site {
 func (s Site) renderPage() []byte {
 	var doc bytes.Buffer
 
-	var t = filepath.Join(ThemeDir, s.Cfg.Theme, "/layout/*.html")
+	var t = filepath.Join(s.Cfg.ThemeDir, s.Cfg.Theme, "/layout/*.html")
 	tmpl, err := template.ParseGlob(t)
 	if err != nil {
 		panic(err)
@@ -234,10 +233,10 @@ func (s Site) renderPage() []byte {
 
 func (s Site) copyAsset() {
 	assets := map[string]string{
-		filepath.Join(s.Cfg.SourceDir, "../images"):             "images",
-		filepath.Join(ThemeDir, s.Cfg.Theme, "source/css"):      "css",
-		filepath.Join(ThemeDir, s.Cfg.Theme, "source/js"):       "js",
-		filepath.Join(ThemeDir, s.Cfg.Theme, "source/fancybox"): "fancybox",
+		filepath.Join(s.Cfg.SourceDir, "../images"):                   "images",
+		filepath.Join(s.Cfg.ThemeDir, s.Cfg.Theme, "source/css"):      "css",
+		filepath.Join(s.Cfg.ThemeDir, s.Cfg.Theme, "source/js"):       "js",
+		filepath.Join(s.Cfg.ThemeDir, s.Cfg.Theme, "source/fancybox"): "fancybox",
 	}
 
 	for src, dst := range assets {

@@ -23,6 +23,7 @@ default_category = "default"
 # Writing
 titlecase = false # Transform title into titlecase
 render_drafts = false
+relative_link = false
 
 # 
 external_link = true

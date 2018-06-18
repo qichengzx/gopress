@@ -24,7 +24,8 @@ type Config struct {
 
 	DefaultCategory string `toml:"default_category"`
 
-	TitleCase bool `toml:"titlecase"`
+	TitleCase    bool `toml:"titlecase"`
+	RelativeLink bool `toml:"relative_link"`
 
 	PerPage       int    `toml:"per_page"`
 	PaginationDir string `toml:"pagination_dir"`

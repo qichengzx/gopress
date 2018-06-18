@@ -171,7 +171,12 @@ func (p *Post) setLink(fileName string) *Post {
 		":title", fileName,
 		":category", p.Category)
 
-	p.Link = myCfg.Root + r.Replace(myCfg.Permalink)
+	if myCfg.RelativeLink {
+		p.Link = myCfg.Root + r.Replace(myCfg.Permalink)
+	} else {
+		p.Link = myCfg.Url + myCfg.Root + r.Replace(myCfg.Permalink)
+	}
+
 	return p
 }
 

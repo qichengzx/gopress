@@ -142,7 +142,7 @@ func (s *Site) Build() {
 
 		bt = s.renderPage()
 
-		makeFile(bt, filepath.Join(s.Cfg.PublicDir, p.Link))
+		makeFile(bt, filepath.Join(s.Cfg.PublicDir, p.Permalink))
 	}
 
 	//TODO 分类，标签 暂不处理分页

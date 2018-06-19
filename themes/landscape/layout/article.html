@@ -1,7 +1,7 @@
 {{ define "article" }}
                 <article id="{{ .ID }}" class="article" itemscope itemprop="blogPost">
                     <div class="article-meta">
-                        <a href="{{ .Link }}" class="article-date">
+                        <a href="{{ .Permalink }}" class="article-date">
                             <time itemprop="datePublished">{{ .Date }}</time>
                         </a>
                         <div class="article-category">
@@ -11,14 +11,14 @@
                     <div class="article-inner">
                         <header class="article-header">
                             <h1 itemprop="name">
-                                <a class="article-title" href="{{ .Link }}">{{ .Title }}</a>
+                                <a class="article-title" href="{{ .Permalink }}">{{ .Title }}</a>
                             </h1>
                         </header>
                         <div class="article-entry" itemprop="articleBody">
                         {{ .Content }}
                         </div>
                         <footer class="article-footer">
-                            <a href="{{ .Link }}#comments" class="article-comment-link">Comments</a>
+                            <a href="{{ .Permalink }}#comments" class="article-comment-link">Comments</a>
                         {{ if gt (len .Tags ) 0 }}
                             <ul class="article-tag-list">
                             {{ range $tag := .Tags}}

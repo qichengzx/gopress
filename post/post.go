@@ -23,17 +23,17 @@ type PostWarp struct {
 }
 
 type Post struct {
-	ID       string
-	Title    string
-	Category string
-	Created  time.Time
-	Date     string
-	Year     int
-	Unixtime int64
-	Tags     []string
-	Content  template.HTML
-	Link     string
-	Index    int
+	ID        string
+	Title     string
+	Category  string
+	Created   time.Time
+	Date      string
+	Year      int
+	Unixtime  int64
+	Tags      []string
+	Content   template.HTML
+	Permalink string
+	Index     int
 
 	PostNav PostNav
 }
@@ -157,6 +157,15 @@ func (p *Post) setID() *Post {
 }
 
 func (p *Post) setLink(fileName string) *Post {
+	if p.Permalink != "" {
+		if myCfg.RelativeLink {
+			p.Permalink = myCfg.Root + p.Permalink
+		} else {
+			p.Permalink = myCfg.Url + myCfg.Root + p.Permalink
+		}
+
+		return p
+	}
 	now, _ := time.Parse("2006-01-02 15:04:05", p.Date)
 
 	year := now.Format("2006")
@@ -172,9 +181,9 @@ func (p *Post) setLink(fileName string) *Post {
 		":category", p.Category)
 
 	if myCfg.RelativeLink {
-		p.Link = myCfg.Root + r.Replace(myCfg.Permalink)
+		p.Permalink = myCfg.Root + r.Replace(myCfg.Permalink)
 	} else {
-		p.Link = myCfg.Url + myCfg.Root + r.Replace(myCfg.Permalink)
+		p.Permalink = myCfg.Url + myCfg.Root + r.Replace(myCfg.Permalink)
 	}
 
 	return p
@@ -200,7 +209,7 @@ func (p *Post) SetNav(p1, p2 *Post) *Post {
 		p.PostNav = PostNav{
 			Prev: Nav{
 				Title: p2.Title,
-				Link:  p2.Link,
+				Link:  p2.Permalink,
 			},
 			Next: Nav{},
 		}
@@ -209,7 +218,7 @@ func (p *Post) SetNav(p1, p2 *Post) *Post {
 			Prev: Nav{},
 			Next: Nav{
 				Title: p1.Title,
-				Link:  p1.Link,
+				Link:  p1.Permalink,
 			},
 		}
 	} else {
@@ -217,11 +226,11 @@ func (p *Post) SetNav(p1, p2 *Post) *Post {
 		p.PostNav = PostNav{
 			Prev: Nav{
 				Title: p2.Title,
-				Link:  p2.Link,
+				Link:  p2.Permalink,
 			},
 			Next: Nav{
 				Title: p1.Title,
-				Link:  p1.Link,
+				Link:  p1.Permalink,
 			},
 		}
 	}

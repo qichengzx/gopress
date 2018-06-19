@@ -6,7 +6,7 @@
                     <ul>
                     {{ range $post := .Recent }}
                         <li>
-                            <a href="{{ $post.Link }}">{{ $post.Title }}</a>
+                            <a href="{{ $post.Permalink }}">{{ $post.Title }}</a>
                         </li>
                     {{ end }}
                     </ul>

@@ -10,7 +10,7 @@ func (s *Site) postMap() []sitemap.Item {
 
 	for _, post := range s.Posts {
 		var item = sitemap.Item{
-			Permalink: post.Link,
+			Permalink: post.Permalink,
 			Lastmod:   post.Date,
 		}
 

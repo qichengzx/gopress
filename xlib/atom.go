@@ -24,7 +24,7 @@ func (s *Site) Atom() {
 		var item = &feeds.Item{
 			Title:       post.Title,
 			Id:          post.ID,
-			Link:        &feeds.Link{Href: s.Cfg.Url + post.Permalink},
+			Link:        &feeds.Link{Href: post.Permalink},
 			Description: string(post.Content),
 			Content:     string(post.Content),
 			Created:     post.Created,

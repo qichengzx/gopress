@@ -59,6 +59,11 @@ var (
 	myCfg *config.Config
 )
 
+const (
+	postDir  = "_posts"
+	draftDir = "_draft"
+)
+
 func GetPosts(path string, cfg *config.Config) (PostWarp, []string, []string) {
 	myCfg = cfg
 	return getPostlist(path)
@@ -74,6 +79,7 @@ func getPostlist(path string) (PostWarp, []string, []string) {
 	var tag = map[string][]Post{}
 	var arh = map[string][]Post{}
 
+	path = filepath.Join(path,postDir)
 	err := filepath.Walk(path, func(path string, f os.FileInfo, err error) error {
 		var p = Post{}
 

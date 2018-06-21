@@ -11,7 +11,7 @@ root = "/"
 permalink = ":year/:month/:day/:title.html"
 
 # Directory
-source_dir = "source/_posts"
+source_dir = "source"
 public_dir = "public"
 tag_dir = "tags"
 category_dir = "categories"
@@ -24,8 +24,6 @@ default_category = "default"
 titlecase = false # Transform title into titlecase
 render_drafts = false
 relative_link = false
-
-# 
 external_link = true
 
 # Pagination

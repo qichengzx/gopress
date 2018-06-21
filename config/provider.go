@@ -27,6 +27,9 @@ type Config struct {
 	TitleCase    bool `toml:"titlecase"`
 	RelativeLink bool `toml:"relative_link"`
 
+	// TODO add external_link
+	ExternalLink bool `toml:"external_link"`
+
 	PerPage       int    `toml:"per_page"`
 	PaginationDir string `toml:"pagination_dir"`
 

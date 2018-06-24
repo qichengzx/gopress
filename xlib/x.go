@@ -32,7 +32,6 @@ type Site struct {
 	CurrentPost post.Post
 
 	Cfg      *config.Config
-	ThemeCfg *config.ThemeCfg
 
 	CopyRight string
 }

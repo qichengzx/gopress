@@ -104,8 +104,6 @@ func getPostlist(path string) (PostWarp, []string, []string) {
 			setUnixtime().
 			setLink(fileID)
 
-		//TODO check if post have a category
-		//it will be set to default if not
 		if p.Category == "" {
 			p.Category = myCfg.DefaultCategory
 		}

@@ -1,11 +1,11 @@
 {{ define "sidebar-archive" }}
-    {{ if gt (len .Archives ) 0 }}
+    {{ if gt (len .Archive.Archives ) 0 }}
             <div class="widget-wrap">
                 <h3 class="widget-title">Archives</h3>
                 <div class="widget">
                     <ul class="archive-list">
                     {{ $ArchiveDir := .Cfg.ArchiveDir }}
-                    {{ range $month, $post := .Archives }}
+                    {{ range $month, $post := .Archive.Archives }}
                         <li class="archive-list-item">
                             <a class="archive-list-link" href="/{{ $ArchiveDir }}/{{ $month }}">{{ $month }}</a>
                             <span class="archive-list-count">{{ len $post }}</span>

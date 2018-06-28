@@ -17,7 +17,7 @@ type Site struct {
 	Posts      []post.Post
 	CatPosts   map[string][]post.Post
 	TagPosts   map[string][]post.Post
-	Archives   map[string][]post.Post
+	Archive Archive
 	Categories map[string]int
 	Tags       map[string]int
 	Recent     []post.Post
@@ -31,9 +31,14 @@ type Site struct {
 
 	CurrentPost post.Post
 
-	Cfg      *config.Config
+	Cfg *config.Config
 
 	CopyRight string
+}
+
+type Archive struct {
+	Year map[string][]post.Post
+	Archives map[string][]post.Post
 }
 
 const (
@@ -65,7 +70,9 @@ func New(cfFile string) *Site {
 		Posts:      pw.Posts,
 		CatPosts:   pw.CatPosts,
 		TagPosts:   pw.TagPosts,
-		Archives:   pw.Archives,
+		Archive:Archive{
+			Archives:pw.Archives,
+		},
 		Categories: post.SliceToMAP(cates),
 		Tags:       post.SliceToMAP(tags),
 		Recent:     Recent,
@@ -179,7 +186,7 @@ func (s *Site) Build() {
 
 	//Archived by month
 	s.CurrentPage = PageTypeArh
-	for m, posts := range s.Archives {
+	for m, posts := range s.Archive.Archives {
 		s.Posts = posts
 		s.CurrentPageTitle = m
 
@@ -189,7 +196,7 @@ func (s *Site) Build() {
 
 	//Archive Index Page
 	s.CurrentPage = PageTypeArhIdx
-	s.Archives = yearArchive
+	s.Archive.Year = yearArchive
 	bt = s.renderPage()
 	makeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.ArchiveDir, indexPage))
 

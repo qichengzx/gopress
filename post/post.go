@@ -250,7 +250,7 @@ func fileName(f string) string {
 
 func getContent(c []byte) template.HTML {
 	lines := strings.Split(string(c), "\n")
-	content := strings.Join(lines[contentLine:len(lines)], "\n")
+	content := strings.Join(lines[contentLine:], "\n")
 	str := blackfriday.MarkdownCommon([]byte(content))
 
 	return template.HTML(str)

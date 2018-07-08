@@ -203,7 +203,7 @@ func (s *Site) Build() {
 	s.copyAsset()
 
 	s.Posts = posts
-	render := sitemap.NewRender(s.Cfg.PublicDir, s.Cfg.Url)
+	render := sitemap.NewRender(s.Cfg.PublicDir, s.Cfg.URL)
 	render.Go(s.postMap(), s.categoryMap(), s.tagMap())
 
 	s.Atom()

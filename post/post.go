@@ -165,7 +165,7 @@ func (p *Post) setLink(fileName string) *Post {
 		if myCfg.RelativeLink {
 			p.Permalink = myCfg.Root + p.Permalink
 		} else {
-			p.Permalink = myCfg.Url + myCfg.Root + p.Permalink
+			p.Permalink = myCfg.URL + myCfg.Root + p.Permalink
 		}
 
 		return p
@@ -187,7 +187,7 @@ func (p *Post) setLink(fileName string) *Post {
 	if myCfg.RelativeLink {
 		p.Permalink = myCfg.Root + r.Replace(myCfg.Permalink)
 	} else {
-		p.Permalink = myCfg.Url + myCfg.Root + r.Replace(myCfg.Permalink)
+		p.Permalink = myCfg.URL + myCfg.Root + r.Replace(myCfg.Permalink)
 	}
 
 	return p

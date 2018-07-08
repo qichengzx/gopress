@@ -4,11 +4,11 @@
             <div id="header-outer" class="outer">
                 <div id="header-title" class="inner">
                     <h1 id="logo-wrap">
-                        <a href="{{ .Cfg.Url }}" id="logo">{{ .Cfg.Title }}</a>
+                        <a href="{{ .Cfg.URL }}" id="logo">{{ .Cfg.Title }}</a>
                     </h1>
                     {{ if .Cfg.SubTitle }}
                     <h2 id="subtitle-wrap">
-                        <a href="{{ .Cfg.Url }}" id="subtitle">{{ .Cfg.SubTitle }}</a>
+                        <a href="{{ .Cfg.URL }}" id="subtitle">{{ .Cfg.SubTitle }}</a>
                     </h2>
                     {{ end }}
                 </div>
@@ -29,7 +29,7 @@
                         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
                             <input type="search" name="q" class="search-form-input" placeholder="Search">
                             <button type="submit" class="search-form-submit">&#xF002;</button>
-                            <input type="hidden" name="sitesearch" value="{{ .Cfg.Url }}">
+                            <input type="hidden" name="sitesearch" value="{{ .Cfg.URL }}">
                         </form>
                     </div>
                 </div>

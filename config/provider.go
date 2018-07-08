@@ -12,7 +12,7 @@ type Config struct {
 	Author      string `toml:"author"`
 	Rss         string `toml:"rss"`
 
-	Url       string `toml:"url"`
+	URL       string `toml:"url"`
 	Root      string `toml:"root"`
 	Permalink string `toml:"permalink"`
 

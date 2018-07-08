@@ -12,14 +12,14 @@ func (s *Site) Atom() {
 	feed := &feeds.Feed{
 		Title:       s.Cfg.Title,
 		Subtitle:    s.Cfg.SubTitle,
-		Link:        &feeds.Link{Href: s.Cfg.Url},
+		Link:        &feeds.Link{Href: s.Cfg.URL},
 		Description: s.Cfg.Description,
 		Author:      &feeds.Author{Name: s.Cfg.Author},
 		Created:     now,
 	}
 
 	//TODO Description is too long
-	var items = []*feeds.Item{}
+	var items []*feeds.Item
 	for _, post := range s.Posts {
 		var item = &feeds.Item{
 			Title:       post.Title,

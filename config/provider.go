@@ -48,7 +48,7 @@ type ThemeCfg struct {
 
 type Menu struct {
 	Title string `toml:"title"`
-	Url   string `toml:"url"`
+	URL   string `toml:"url"`
 }
 
 func NewProvider(f string) *Config {

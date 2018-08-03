@@ -17,7 +17,7 @@ type Site struct {
 	Posts      []post.Post
 	CatPosts   map[string][]post.Post
 	TagPosts   map[string][]post.Post
-	Archive Archive
+	Archive    Archive
 	Categories map[string]int
 	Tags       map[string]int
 	Recent     []post.Post
@@ -37,7 +37,7 @@ type Site struct {
 }
 
 type Archive struct {
-	Year map[string][]post.Post
+	Year     map[string][]post.Post
 	Archives map[string][]post.Post
 }
 
@@ -67,11 +67,11 @@ func New(cfFile string) *Site {
 	}
 
 	return &Site{
-		Posts:      pw.Posts,
-		CatPosts:   pw.CatPosts,
-		TagPosts:   pw.TagPosts,
-		Archive:Archive{
-			Archives:pw.Archives,
+		Posts:    pw.Posts,
+		CatPosts: pw.CatPosts,
+		TagPosts: pw.TagPosts,
+		Archive: Archive{
+			Archives: pw.Archives,
 		},
 		Categories: post.SliceToMAP(cates),
 		Tags:       post.SliceToMAP(tags),
@@ -106,7 +106,7 @@ func (s *Site) Build() {
 	makeFile(bt, filepath.Join(s.Cfg.PublicDir, indexPage))
 
 	if s.PageNav.PageCount > 0 {
-		for i := s.Cfg.PerPage; i <= s.PageNav.PageCount; i++ {
+		for i := 1; i <= s.PageNav.PageCount; i++ {
 			lastIndex := 0
 			if i*s.Cfg.PerPage > postCount {
 				lastIndex = postCount
@@ -118,6 +118,7 @@ func (s *Site) Build() {
 			s.CurrentPageIndex = i
 			s.NextPageIndex = i + 1
 			s.PrevPageIndex = i - 1
+
 			bt := s.renderPage()
 
 			p := strconv.Itoa(i)
@@ -148,7 +149,7 @@ func (s *Site) Build() {
 
 		bt = s.renderPage()
 
-		makeFile(bt, filepath.Join(s.Cfg.PublicDir, p.Permalink))
+		makeFile(bt, filepath.Join(s.Cfg.PublicDir, p.Path))
 	}
 
 	//TODO 分类，标签 暂不处理分页

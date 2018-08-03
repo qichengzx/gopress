@@ -33,6 +33,7 @@ type Post struct {
 	Tags      []string
 	Content   template.HTML
 	Permalink string
+	Path      string
 	Index     int
 
 	PostNav PostNav
@@ -79,7 +80,7 @@ func getPostlist(path string) (PostWarp, []string, []string) {
 	var tag = map[string][]Post{}
 	var arh = map[string][]Post{}
 
-	path = filepath.Join(path,postDir)
+	path = filepath.Join(path, postDir)
 	err := filepath.Walk(path, func(path string, f os.FileInfo, err error) error {
 		var p = Post{}
 
@@ -162,6 +163,7 @@ func (p *Post) setID() *Post {
 
 func (p *Post) setLink(fileName string) *Post {
 	if p.Permalink != "" {
+		p.Path = p.Permalink
 		if myCfg.RelativeLink {
 			p.Permalink = myCfg.Root + p.Permalink
 		} else {
@@ -184,10 +186,11 @@ func (p *Post) setLink(fileName string) *Post {
 		":title", fileName,
 		":category", p.Category)
 
+	p.Path = r.Replace(myCfg.Permalink)
 	if myCfg.RelativeLink {
-		p.Permalink = myCfg.Root + r.Replace(myCfg.Permalink)
+		p.Permalink = myCfg.Root + p.Path
 	} else {
-		p.Permalink = myCfg.URL + myCfg.Root + r.Replace(myCfg.Permalink)
+		p.Permalink = myCfg.URL + myCfg.Root + p.Path
 	}
 
 	return p

@@ -10,6 +10,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -54,13 +55,12 @@ type Tag struct {
 }
 
 var (
-	contentLine = 6
-	fileExt     = ".md"
-
 	myCfg *config.Config
+	re    = regexp.MustCompile(`^([\s\S]+?)\n(-{3,}|;{3,})(?:$|\n([\s\S]*)$)`)
 )
 
 const (
+	fileExt  = ".md"
 	postDir  = "_posts"
 	draftDir = "_draft"
 )
@@ -252,8 +252,14 @@ func fileName(f string) string {
 }
 
 func getContent(c []byte) template.HTML {
-	lines := strings.Split(string(c), "\n")
-	content := strings.Join(lines[contentLine:], "\n")
+	cStr := string(c)
+	content := ""
+
+	params := re.FindStringSubmatch(cStr)
+	if len(params) >= 3 {
+		content = params[3]
+	}
+
 	str := blackfriday.MarkdownCommon([]byte(content))
 
 	return template.HTML(str)

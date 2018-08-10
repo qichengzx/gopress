@@ -103,7 +103,7 @@ func (s *Site) Build() {
 	clearDir(s.Cfg.PublicDir)
 
 	bt := s.renderPage()
-	makeFile(bt, filepath.Join(s.Cfg.PublicDir, indexPage))
+	writeFile(bt, filepath.Join(s.Cfg.PublicDir, indexPage))
 
 	if s.PageNav.PageCount > 0 {
 		for i := 1; i <= s.PageNav.PageCount; i++ {
@@ -122,7 +122,7 @@ func (s *Site) Build() {
 			bt := s.renderPage()
 
 			p := strconv.Itoa(i)
-			makeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.PaginationDir, p, indexPage))
+			writeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.PaginationDir, p, indexPage))
 		}
 	}
 
@@ -149,7 +149,7 @@ func (s *Site) Build() {
 
 		bt = s.renderPage()
 
-		makeFile(bt, filepath.Join(s.Cfg.PublicDir, p.Path))
+		writeFile(bt, filepath.Join(s.Cfg.PublicDir, p.Path))
 	}
 
 	//TODO 分类，标签 暂不处理分页
@@ -161,7 +161,7 @@ func (s *Site) Build() {
 		s.CurrentPageTitle = cat
 
 		bt = s.renderPage()
-		makeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.CategoryDir, cat, indexPage))
+		writeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.CategoryDir, cat, indexPage))
 	}
 
 	//标签页
@@ -171,7 +171,7 @@ func (s *Site) Build() {
 		s.CurrentPageTitle = tag
 
 		bt = s.renderPage()
-		makeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.TagDir, tag, indexPage))
+		writeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.TagDir, tag, indexPage))
 	}
 
 	yearArchive := post.GenArchive(posts)
@@ -182,7 +182,7 @@ func (s *Site) Build() {
 		s.CurrentPageTitle = year
 
 		bt = s.renderPage()
-		makeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.ArchiveDir, year, indexPage))
+		writeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.ArchiveDir, year, indexPage))
 	}
 
 	//Archived by month
@@ -192,14 +192,14 @@ func (s *Site) Build() {
 		s.CurrentPageTitle = m
 
 		bt = s.renderPage()
-		makeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.ArchiveDir, m, indexPage))
+		writeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.ArchiveDir, m, indexPage))
 	}
 
 	//Archive Index Page
 	s.CurrentPage = PageTypeArhIdx
 	s.Archive.Year = yearArchive
 	bt = s.renderPage()
-	makeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.ArchiveDir, indexPage))
+	writeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.ArchiveDir, indexPage))
 
 	s.copyAsset()
 

@@ -40,5 +40,5 @@ func (s *Site) Atom() {
 		log.Fatal(err)
 	}
 
-	makeFile([]byte(atom), filepath.Join(s.Cfg.PublicDir, s.Cfg.Rss))
+	writeFile([]byte(atom), filepath.Join(s.Cfg.PublicDir, s.Cfg.Rss))
 }

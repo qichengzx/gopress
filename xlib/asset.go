@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"log"
 )
 
 func CopyFile(src, dst string) (err error) {
@@ -104,7 +105,7 @@ func CopyDir(src string, dst string) (err error) {
 	return
 }
 
-func makeFile(c []byte, file string) {
+func writeFile(c []byte, file string) {
 	dir := filepath.Dir(file)
 	os.MkdirAll(dir, 0777)
 
@@ -112,6 +113,7 @@ func makeFile(c []byte, file string) {
 	if err != nil {
 		panic(err)
 	}
+	log.Printf("Generated: %s\n", file);
 }
 
 func clearDir(path string) {

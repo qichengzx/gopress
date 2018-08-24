@@ -8,24 +8,24 @@
 {{ $PaginationDir := .Cfg.PaginationDir }}
 {{ if gt $currentPageIndex 1 }}
 {{ if eq $PrevPageIndex 1 }}
-    <a class="extend prev" rel="prev" href="{{ $root }}">« Prev</a>
+  <a class="extend prev" rel="prev" href="{{ $root }}">« Prev</a>
 {{ else }}
-    <a class="extend prev" rel="prev" href="{{ $root }}{{ $PaginationDir }}/{{ $PrevPageIndex }}/">« Prev</a>
+  <a class="extend prev" rel="prev" href="{{ $root }}{{ $PaginationDir }}/{{ $PrevPageIndex }}/">« Prev</a>
 {{ end }}
 {{ end }}
 
 {{range $i := .PageNav.PageSlice }}
 {{ if eq $i 1 }}
-    <a class="page-number" href="{{ $root }}">{{ $i }}</a>
+  <a class="page-number" href="{{ $root }}">{{ $i }}</a>
 {{ else if eq $i $currentPageIndex }}
-    <span class="page-number current">{{ $i }}</span>
+  <span class="page-number current">{{ $i }}</span>
 {{ else }}
-    <a class="page-number" href="{{ $root }}{{ $PaginationDir }}/{{ $i }}/">{{ $i }}</a>
+  <a class="page-number" href="{{ $root }}{{ $PaginationDir }}/{{ $i }}/">{{ $i }}</a>
 {{ end }}
 {{ end }}
 
 {{ if gt .PageNav.PageCount $currentPageIndex }}
-    <a class="extend next" rel="next" href="{{ $root }}{{ $PaginationDir }}/{{ $NextPageIndex }}/">Next »</a>
+  <a class="extend next" rel="next" href="{{ $root }}{{ $PaginationDir }}/{{ $NextPageIndex }}/">Next »</a>
 {{ end }}
 </nav>
 

@@ -1,7 +1,7 @@
 {{ define "mobile-nav" }}
 <nav id="mobile-nav">
-    {{ range $menu := .Cfg.ThemeCfg.Menu }}
-        <a class="mobile-nav-link" href="{{ $menu.URL }}">{{ $menu.Title }}</a>
-    {{ end }}
+  {{ range $menu := .Cfg.ThemeCfg.Menu }}
+  <a class="mobile-nav-link" href="{{ $menu.URL }}">{{ $menu.Title }}</a>
+  {{ end }}
 </nav>
 {{ end }}

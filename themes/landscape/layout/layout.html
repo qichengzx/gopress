@@ -5,63 +5,62 @@
 <meta charset="UTF-8">
 <title>
 {{ if eq .CurrentPage "index" }}
-	{{ .Cfg.Title }}
-	{{ if .Cfg.SubTitle }}
-	- {{ .Cfg.SubTitle }}
-	{{ end }}
+  {{ .Cfg.Title }}
+  {{ if .Cfg.SubTitle }}
+  - {{ .Cfg.SubTitle }}
+  {{ end }}
 {{ else if eq .CurrentPage "post" }}
-	{{ $post := index .Posts .CurrentPageIndex }}
-	{{ $post.Title }} - {{ .Cfg.Title }}
+  {{ $post := index .Posts .CurrentPageIndex }}
+  {{ $post.Title }} - {{ .Cfg.Title }}
 {{ else if eq .CurrentPage "archives" }}
-	Archives: {{ .CurrentPageTitle }} - {{ .Cfg.Title }}
+  Archives: {{ .CurrentPageTitle }} - {{ .Cfg.Title }}
 {{ else }}
-	{{ .CurrentPageTitle }} - {{ .Cfg.Title }}
+  {{ .CurrentPageTitle }} - {{ .Cfg.Title }}
 {{ end }}
 </title>
 {{ template "head" . }}
 </head>
 <body>
 <div id="container">
-    <div id="wrap">
-		{{ template "header" .}}
-        <div class="outer">
-			<section id="main">
-			{{ if eq .CurrentPage "index"}}
-				{{ range $post := .Posts }}
-				{{ template "article" . }}
-				{{ end }}
+  <div id="wrap">
+    {{ template "header" .}}
+    <div class="outer">
+      <section id="main">
+      {{ if eq .CurrentPage "index"}}
+        {{ range $post := .Posts }}
+        {{ template "article" . }}
+        {{ end }}
 
-				{{ if gt .PageNav.PageCount 0 }}
-				{{ template "nav" . }}
-				{{ end }}
-			{{ else if eq .CurrentPage "post" }}
-				{{ template "article" .CurrentPost }}
-
-			{{ else if eq .CurrentPage "archiveIndex" }}
-				<section class="archives-wrap">
-					{{ range $year,$posts := .Archive.Year }}
-					<div class="archive-title-wrap">
-						<span class="archive-title">{{ $year }}</span>
-					</div>
-					<div class="archives">
-					{{ range $post := $posts }}
-					{{ template "archive-post" $post }}
-					{{ end }}
-					</div>
-					{{ end }}
-				</section>
-			{{ else }}
-				{{ template "archive" . }}
-			{{ end }}
-			</section>
-			{{ if .Cfg.ThemeCfg.Sidebar }}
-			{{ template "sidebar" . }}
-			{{ end }}
-		</div>
-		{{ template "footer" . }}
-	</div>
-	{{ template "mobile-nav" . }}
-	{{ template "after-footer" . }}
+        {{ if gt .PageNav.PageCount 0 }}
+        {{ template "nav" . }}
+        {{ end }}
+      {{ else if eq .CurrentPage "post" }}
+        {{ template "article" .CurrentPost }}
+      {{ else if eq .CurrentPage "archiveIndex" }}
+          <section class="archives-wrap">
+            {{ range $year,$posts := .Archive.Year }}
+            <div class="archive-title-wrap">
+              <span class="archive-title">{{ $year }}</span>
+            </div>
+            <div class="archives">
+            {{ range $post := $posts }}
+            {{ template "archive-post" $post }}
+            {{ end }}
+            </div>
+            {{ end }}
+          </section>
+      {{ else }}
+        {{ template "archive" . }}
+      {{ end }}
+      </section>
+      {{ if .Cfg.ThemeCfg.Sidebar }}
+      {{ template "sidebar" . }}
+      {{ end }}
+    </div>
+    {{ template "footer" . }}
+  </div>
+  {{ template "mobile-nav" . }}
+  {{ template "after-footer" . }}
 </div>
 </body>
 </html>

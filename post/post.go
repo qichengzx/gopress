@@ -255,6 +255,7 @@ func getContent(c []byte) template.HTML {
 	cStr := string(c)
 	content := ""
 
+	//TODO bug
 	params := re.FindStringSubmatch(cStr)
 	if len(params) >= 3 {
 		content = params[3]

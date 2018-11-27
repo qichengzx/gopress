@@ -22,6 +22,12 @@ go get github.com/qichengzx/gopress
 gopress
 ```
 
+### TODO
+
+- [ ] regex in post.go
+- [ ] rss summary
+- [ ] post content
+
 ## License
 
 This project is under the MIT License.

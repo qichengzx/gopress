@@ -1,62 +1,64 @@
 package config
 
 import (
-	"github.com/BurntSushi/toml"
+	"log"
+	"io/ioutil"
 	"path/filepath"
+	"gopkg.in/yaml.v2"
 )
 
 const ThemeDir = "themes"
 
 type Config struct {
-	Title       string `toml:"title"`
-	SubTitle    string `toml:"subtitle"`
-	Description string `toml:"description"`
-	Author      string `toml:"author"`
-	Rss         string `toml:"rss"`
+	Title           string `yaml:"title"`
+    SubTitle        string `yaml:"subtitle"`
+    Description     string `yaml:"description"`
+    Author          string `yaml:"author"`
+    Rss             string `yaml:"rss"`
+    URL             string `yaml:"url"`
+    Root            string `yaml:"root"`
+    Permalink       string `yaml:"permalink"`
+    SourceDir       string `yaml:"source_dir"`
+    PublicDir       string `yaml:"public_dir"`
+    TagDir          string `yaml:"tag_dir"`
+    CategoryDir     string `yaml:"category_dir"`
+    ArchiveDir      string `yaml:"archive_dir"`
+    DefaultCategory string `yaml:"default_category"`
+    TitleCase       bool   `yaml:"titlecase"`
+    RenderDrafts    bool   `yaml:"render_drafts"`
+    RelativeLink    bool   `yaml:"relative_link"`
+    ExternalLink    bool   `yaml:"external_link"`
+    PerPage         int    `yaml:"per_page"`
+    PaginationDir   string `yaml:"pagination_dir"`
+    Theme           string `yaml:"theme"`
 
-	URL       string `toml:"url"`
-	Root      string `toml:"root"`
-	Permalink string `toml:"permalink"`
-
-	SourceDir   string `toml:"source_dir"`
-	PublicDir   string `toml:"public_dir"`
-	TagDir      string `toml:"tag_dir"`
-	CategoryDir string `toml:"category_dir"`
-	ArchiveDir  string `toml:"archive_dir"`
-
-	DefaultCategory string `toml:"default_category"`
-
-	TitleCase    bool `toml:"titlecase"`
-	RelativeLink bool `toml:"relative_link"`
-
-	// TODO add external_link
-	ExternalLink bool `toml:"external_link"`
-
-	PerPage       int    `toml:"per_page"`
-	PaginationDir string `toml:"pagination_dir"`
-
-	Theme    string `toml:"theme"`
 	ThemeCfg ThemeCfg
 }
 
 type ThemeCfg struct {
-	Menu        []Menu `toml:"menu"`
-	ExcerptLink string `toml:"excerpt_link"`
-	Fancybox    bool   `toml:"fancybox"`
-	Sidebar     string `toml:"sidebar"`
-	Favicon     string `toml:"favicon"`
+	ExcerptLink string `yaml:"excerpt_link"`
+    Fancybox    bool   `yaml:"fancybox"`
+    Sidebar     string `yaml:"sidebar"`
+    Favicon     string `yaml:"favicon"`
+    Menu        []Menu `yaml:"menu"`
 }
 
 type Menu struct {
-	Title string `toml:"title"`
-	URL   string `toml:"url"`
+	Title string `yaml:"title"`
+	URL   string `yaml:"url"`
 }
 
 func NewProvider(f string) *Config {
+	b, err := ioutil.ReadFile(f)
+    if err != nil {
+        log.Fatalf("error: %v", err)
+    }
+
 	var conf Config
-	if _, err := toml.DecodeFile(f, &conf); err != nil {
-		panic(err)
-	}
+    err = yaml.UnmarshalStrict(b, &conf)
+    if err != nil {
+        log.Fatalf("error: %v", err)
+    }
 
 	conf.ThemeCfg = themeCfgProvider(filepath.Join(ThemeDir, conf.Theme, f))
 
@@ -65,9 +67,15 @@ func NewProvider(f string) *Config {
 
 func themeCfgProvider(f string) ThemeCfg {
 	var conf ThemeCfg
-	if _, err := toml.DecodeFile(f, &conf); err != nil {
-		panic(err)
-	}
+	b, err := ioutil.ReadFile(f)
+    if err != nil {
+        log.Fatalf("error: %v", err)
+    }
+
+    err = yaml.UnmarshalStrict(b, &conf)
+    if err != nil {
+        log.Fatalf("error: %v", err)
+    }
 
 	return conf
 }

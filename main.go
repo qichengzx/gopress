@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-var cfFile = "./_config.toml"
+var cfFile = "./_config.yaml"
 
 func main() {
 	timeStart := time.Now()

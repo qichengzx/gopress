@@ -1,0 +1,18 @@
+# Content
+excerpt_link: Read More
+fancybox: true
+
+# Sidebar
+sidebar: right
+
+# Favicon
+favicon: favicon.ico
+
+# Menu
+menu:
+  - title: Home
+    url: /
+  - title: Archives
+    url: /archives
+  - title: GitHub
+    url: https://github.com

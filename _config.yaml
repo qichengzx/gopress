@@ -1,0 +1,35 @@
+# Site
+title: 启程
+subtitle: 
+description: 
+author: 
+rss: /atom.xml
+
+# URL
+url: 
+root: /
+permalink: :year/:month/:day/:title.html
+
+# Directory
+source_dir: source
+public_dir: public
+tag_dir: tags
+category_dir: categories
+archive_dir: archives
+
+# Category & Tag
+default_category: default
+
+# Writing
+titlecase: false
+render_drafts: false
+relative_link: false
+external_link: true
+
+# Pagination
+per_page: 10
+pagination_dir: page
+
+# Extensions
+theme: landscape
+

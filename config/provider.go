@@ -5,6 +5,8 @@ import (
 	"path/filepath"
 )
 
+const ThemeDir = "themes"
+
 type Config struct {
 	Title       string `toml:"title"`
 	SubTitle    string `toml:"subtitle"`
@@ -33,7 +35,6 @@ type Config struct {
 	PerPage       int    `toml:"per_page"`
 	PaginationDir string `toml:"pagination_dir"`
 
-	ThemeDir string `toml:"theme_dir"`
 	Theme    string `toml:"theme"`
 	ThemeCfg ThemeCfg
 }
@@ -57,7 +58,7 @@ func NewProvider(f string) *Config {
 		panic(err)
 	}
 
-	conf.ThemeCfg = themeCfgProvider(filepath.Join(conf.ThemeDir, conf.Theme, f))
+	conf.ThemeCfg = themeCfgProvider(filepath.Join(ThemeDir, conf.Theme, f))
 
 	return &conf
 }

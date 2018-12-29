@@ -252,16 +252,10 @@ func fileName(f string) string {
 }
 
 func getContent(c []byte) template.HTML {
-	cStr := string(c)
-	content := ""
-
-	//TODO bug
-	params := re.FindStringSubmatch(cStr)
-	if len(params) >= 3 {
-		content = params[3]
-	}
-
-	str := blackfriday.MarkdownCommon([]byte(content))
+	match := re.FindSubmatch(c)
+	//TODO check
+	content := match[3]
+	str := blackfriday.MarkdownCommon(content)
 
 	return template.HTML(str)
 }

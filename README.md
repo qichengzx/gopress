@@ -24,7 +24,7 @@ gopress
 
 ### TODO
 
-- [ ] regex in post.go
+- [x] regex in post.go
 - [ ] rss summary
 - [ ] post content
 

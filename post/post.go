@@ -154,8 +154,10 @@ func (p *Post) new(filename string) *Post {
 
 func parsePost(content []byte) ([]byte, template.HTML) {
 	match := re.FindSubmatch(content)
+	if len(match) != 4 {
+		panic("Format error")
+	}
 
-	//TODO check
 	byteContent := match[3]
 	htmlContent := blackfriday.MarkdownCommon(byteContent)
 

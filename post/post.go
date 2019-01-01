@@ -98,8 +98,8 @@ func getPostlist(path string) (PostWarp, []string, []string) {
 
 		fileID := fileName(f.Name())
 
-		p.setID().
-			setContent(path).
+		p.new(path).
+			setID().
 			setCreated().
 			setYear().
 			setUnixtime().
@@ -136,20 +136,30 @@ func getPostlist(path string) (PostWarp, []string, []string) {
 	return pw, tags, cates
 }
 
-func (p *Post) setContent(fileName string) *Post {
-	content, err := ioutil.ReadFile(fileName)
+func (p *Post) new(filename string) *Post {
+	fileContent, err := ioutil.ReadFile(filename)
 	if err != nil {
 		panic(err)
 	}
 
-	err = yaml.Unmarshal(content, &p)
+	meta, content := parsePost(fileContent)
+	err = yaml.Unmarshal(meta, &p)
 	if err != nil {
 		panic(err)
 	}
 
-	p.Content = getContent(content)
-
+	p.Content = content
 	return p
+}
+
+func parsePost(content []byte) ([]byte, template.HTML) {
+	match := re.FindSubmatch(content)
+
+	//TODO check
+	byteContent := match[3]
+	htmlContent := blackfriday.MarkdownCommon(byteContent)
+
+	return match[1], template.HTML(htmlContent)
 }
 
 func (p *Post) setID() *Post {
@@ -249,15 +259,6 @@ func fileName(f string) string {
 	r := []rune(f)
 	length := len(r)
 	return string(r[0 : length-3])
-}
-
-func getContent(c []byte) template.HTML {
-	match := re.FindSubmatch(c)
-	//TODO check
-	content := match[3]
-	str := blackfriday.MarkdownCommon(content)
-
-	return template.HTML(str)
 }
 
 func GenArchive(posts []Post) map[string][]Post {

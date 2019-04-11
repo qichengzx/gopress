@@ -1,4 +1,4 @@
-package xlib
+package generator
 
 // thanks to https://gist.github.com/r0l1/92462b38df26839a3ca324697c8cba04
 
@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"os"
 	"path/filepath"
-	"log"
 )
 
 func CopyFile(src, dst string) (err error) {
@@ -105,7 +105,7 @@ func CopyDir(src string, dst string) (err error) {
 	return
 }
 
-func writeFile(c []byte, file string) {
+func WriteFile(c []byte, file string) {
 	dir := filepath.Dir(file)
 	os.MkdirAll(dir, 0777)
 
@@ -113,10 +113,10 @@ func writeFile(c []byte, file string) {
 	if err != nil {
 		panic(err)
 	}
-	log.Printf("Generated: %s\n", file);
+	log.Printf("Generated: %s\n", file)
 }
 
-func clearDir(path string) {
+func ClearDir(path string) {
 	os.RemoveAll(path)
 	os.Mkdir(path, 0777)
 }

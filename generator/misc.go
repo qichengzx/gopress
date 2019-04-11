@@ -1,4 +1,4 @@
-package post
+package generator
 
 func SliceToMAP(sl []string) map[string]int {
 	stmap := make(map[string]int)

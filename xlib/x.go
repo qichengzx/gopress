@@ -3,8 +3,7 @@ package xlib
 import (
 	"bytes"
 	"github.com/qichengzx/gopress/config"
-	"github.com/qichengzx/gopress/plugins/sitemap"
-	"github.com/qichengzx/gopress/post"
+	"github.com/qichengzx/gopress/generator"
 	"html/template"
 	"math"
 	"os"
@@ -14,13 +13,13 @@ import (
 )
 
 type Site struct {
-	Posts      []post.Post
-	CatPosts   map[string][]post.Post
-	TagPosts   map[string][]post.Post
+	Posts      []generator.Post
+	CatPosts   map[string][]generator.Post
+	TagPosts   map[string][]generator.Post
 	Archive    Archive
 	Categories map[string]int
 	Tags       map[string]int
-	Recent     []post.Post
+	Recent     []generator.Post
 
 	CurrentPage      string
 	CurrentPageTitle string
@@ -29,7 +28,7 @@ type Site struct {
 	NextPageIndex    int
 	PageNav          *PageNav
 
-	CurrentPost post.Post
+	CurrentPost generator.Post
 
 	Cfg *config.Config
 
@@ -37,8 +36,8 @@ type Site struct {
 }
 
 type Archive struct {
-	Year     map[string][]post.Post
-	Archives map[string][]post.Post
+	Year     map[string][]generator.Post
+	Archives map[string][]generator.Post
 }
 
 const (
@@ -58,8 +57,8 @@ func New(cfFile string) *Site {
 	appPath, _ := os.Getwd()
 	postPath := filepath.Join(appPath, cfg.SourceDir)
 
-	pw, tags, cates := post.GetPosts(postPath, cfg)
-	var Recent []post.Post
+	pw, tags, cates := generator.GetPosts(postPath, cfg)
+	var Recent []generator.Post
 	if len(pw.Posts) > 5 {
 		Recent = pw.Posts[:5]
 	} else {
@@ -73,8 +72,8 @@ func New(cfFile string) *Site {
 		Archive: Archive{
 			Archives: pw.Archives,
 		},
-		Categories: post.SliceToMAP(cates),
-		Tags:       post.SliceToMAP(tags),
+		Categories: generator.SliceToMAP(cates),
+		Tags:       generator.SliceToMAP(tags),
 		Recent:     Recent,
 
 		CurrentPage:      PageTypeIndex,
@@ -100,10 +99,10 @@ func (s *Site) Build() {
 	}
 
 	// TODO clear public dir only when generate page was success
-	clearDir(s.Cfg.PublicDir)
+	generator.ClearDir(s.Cfg.PublicDir)
 
 	bt := s.renderPage()
-	writeFile(bt, filepath.Join(s.Cfg.PublicDir, indexPage))
+	generator.WriteFile(bt, filepath.Join(s.Cfg.PublicDir, indexPage))
 
 	if s.PageNav.PageCount > 0 {
 		for i := 1; i <= s.PageNav.PageCount; i++ {
@@ -122,7 +121,7 @@ func (s *Site) Build() {
 			bt := s.renderPage()
 
 			p := strconv.Itoa(i)
-			writeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.PaginationDir, p, indexPage))
+			generator.WriteFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.PaginationDir, p, indexPage))
 		}
 	}
 
@@ -134,7 +133,7 @@ func (s *Site) Build() {
 			if postCount > 1 {
 				p.SetNav(nil, &s.Posts[i+1])
 			} else {
-				p.PostNav = post.PostNav{Next: post.Nav{}, Prev: post.Nav{}}
+				p.PostNav = generator.PostNav{Next: generator.Nav{}, Prev: generator.Nav{}}
 			}
 
 		} else if i == postCount-1 {
@@ -149,7 +148,7 @@ func (s *Site) Build() {
 
 		bt = s.renderPage()
 
-		writeFile(bt, filepath.Join(s.Cfg.PublicDir, p.Path))
+		generator.WriteFile(bt, filepath.Join(s.Cfg.PublicDir, p.Path))
 	}
 
 	//TODO 分类，标签 暂不处理分页
@@ -161,7 +160,7 @@ func (s *Site) Build() {
 		s.CurrentPageTitle = cat
 
 		bt = s.renderPage()
-		writeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.CategoryDir, cat, indexPage))
+		generator.WriteFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.CategoryDir, cat, indexPage))
 	}
 
 	//标签页
@@ -171,10 +170,10 @@ func (s *Site) Build() {
 		s.CurrentPageTitle = tag
 
 		bt = s.renderPage()
-		writeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.TagDir, tag, indexPage))
+		generator.WriteFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.TagDir, tag, indexPage))
 	}
 
-	yearArchive := post.GenArchive(posts)
+	yearArchive := generator.GenArchive(posts)
 	//Archived by year
 	s.CurrentPage = PageTypeArh
 	for year, posts := range yearArchive {
@@ -182,7 +181,7 @@ func (s *Site) Build() {
 		s.CurrentPageTitle = year
 
 		bt = s.renderPage()
-		writeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.ArchiveDir, year, indexPage))
+		generator.WriteFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.ArchiveDir, year, indexPage))
 	}
 
 	//Archived by month
@@ -192,22 +191,16 @@ func (s *Site) Build() {
 		s.CurrentPageTitle = m
 
 		bt = s.renderPage()
-		writeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.ArchiveDir, m, indexPage))
+		generator.WriteFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.ArchiveDir, m, indexPage))
 	}
 
 	//Archive Index Page
 	s.CurrentPage = PageTypeArhIdx
 	s.Archive.Year = yearArchive
 	bt = s.renderPage()
-	writeFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.ArchiveDir, indexPage))
+	generator.WriteFile(bt, filepath.Join(s.Cfg.PublicDir, s.Cfg.ArchiveDir, indexPage))
 
 	s.copyAsset()
-
-	s.Posts = posts
-	render := sitemap.NewRender(s.Cfg.PublicDir, s.Cfg.URL)
-	render.Go(s.postMap(), s.categoryMap(), s.tagMap())
-
-	s.Atom()
 }
 
 func (s *Site) makePagnition(count int) *Site {
@@ -240,14 +233,14 @@ func (s Site) renderPage() []byte {
 
 func (s Site) copyAsset() {
 	assets := map[string]string{
-		filepath.Join(s.Cfg.SourceDir, "images"):                      "images",
+		filepath.Join(s.Cfg.SourceDir, "images"):                       "images",
 		filepath.Join(config.ThemeDir, s.Cfg.Theme, "source/css"):      "css",
 		filepath.Join(config.ThemeDir, s.Cfg.Theme, "source/js"):       "js",
 		filepath.Join(config.ThemeDir, s.Cfg.Theme, "source/fancybox"): "fancybox",
 	}
 
 	for src, dst := range assets {
-		CopyDir(src, filepath.Join(s.Cfg.PublicDir, dst))
+		generator.CopyDir(src, filepath.Join(s.Cfg.PublicDir, dst))
 	}
 }
 

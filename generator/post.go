@@ -1,4 +1,4 @@
-package post
+package generator
 
 import (
 	"crypto/md5"
@@ -11,6 +11,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -53,6 +54,8 @@ type Nav struct {
 type Tag struct {
 	Name string
 }
+
+type postWrapper []Post
 
 var (
 	myCfg *config.Config
@@ -320,4 +323,15 @@ func formatUTC(layout string) time.Time {
 		panic(err)
 	}
 	return t.UTC()
+}
+
+
+func (pw postWrapper) Len() int           { return len(pw) }
+func (pw postWrapper) Less(i, j int) bool { return pw[i].Unixtime > pw[j].Unixtime }
+func (pw postWrapper) Swap(i, j int)      { pw[i], pw[j] = pw[j], pw[i] }
+
+func SortPost(posts []Post) []Post {
+	sort.Sort(postWrapper(posts))
+
+	return posts
 }

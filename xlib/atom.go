@@ -5,6 +5,7 @@ import (
 	"log"
 	"path/filepath"
 	"time"
+	"github.com/qichengzx/gopress/generator"
 )
 
 func (s *Site) Atom() {
@@ -40,5 +41,5 @@ func (s *Site) Atom() {
 		log.Fatal(err)
 	}
 
-	writeFile([]byte(atom), filepath.Join(s.Cfg.PublicDir, s.Cfg.Rss))
+	generator.WriteFile([]byte(atom), filepath.Join(s.Cfg.PublicDir, s.Cfg.Rss))
 }

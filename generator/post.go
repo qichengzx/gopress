@@ -244,7 +244,6 @@ func (p *Post) SetNav(p1, p2 *Post) *Post {
 			},
 		}
 	} else {
-
 		p.PostNav = PostNav{
 			Prev: Nav{
 				Title: p2.Title,

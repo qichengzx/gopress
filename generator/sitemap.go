@@ -1,5 +1,5 @@
 // sitemap.go fenerate aitemap.xml for site
-package xlib
+package generator
 
 import (
 	"github.com/qichengzx/gopress/plugins/sitemap"

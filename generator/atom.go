@@ -1,11 +1,10 @@
-package xlib
+package generator
 
 import (
 	"github.com/gorilla/feeds"
 	"log"
 	"path/filepath"
 	"time"
-	"github.com/qichengzx/gopress/generator"
 )
 
 func (s *Site) Atom() {
@@ -41,5 +40,5 @@ func (s *Site) Atom() {
 		log.Fatal(err)
 	}
 
-	generator.WriteFile([]byte(atom), filepath.Join(s.Cfg.PublicDir, s.Cfg.Rss))
+	WriteFile([]byte(atom), filepath.Join(s.Cfg.PublicDir, s.Cfg.Rss))
 }

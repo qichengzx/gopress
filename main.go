@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/qichengzx/gopress/xlib"
+	"github.com/qichengzx/gopress/generator"
 	"log"
 	"time"
 )
@@ -19,7 +19,7 @@ func main() {
 		log.Println("Used", used)
 	}()
 
-	var site = xlib.New(cfFile)
+	var site = generator.New(cfFile)
 	fmt.Println("Welcome to ", site.Cfg.Title)
 	site.Build()
 }

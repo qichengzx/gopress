@@ -19,14 +19,8 @@ go get github.com/qichengzx/gopress
 ## Quick Start
 
 ```bash
-gopress
+gopress -h
 ```
-
-### TODO
-
-- [x] regex in post.go
-- [ ] rss summary
-- [ ] post content
 
 ## License
 

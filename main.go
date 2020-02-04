@@ -27,7 +27,7 @@ func main() {
 			log.Println("Used", used)
 		}()
 
-		var site = generator.New("./config.yaml")
+		var site = generator.New("./_config.yaml")
 		site.Build()
 		break;
 

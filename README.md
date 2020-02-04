@@ -1,25 +1,36 @@
 gopress
 ----
 
-This is a fast blog framework,powered by [Go](https://golang.org)
-
-It is currently under development.
+This is a fast,simple blog framework,powered by [Go](https://golang.org)
 
 ## Features
 
 - Fast generating
 - Easy to use
 
-## Installation
-
-```bash
-go get github.com/qichengzx/gopress
-```
-
 ## Quick Start
 
+### Install gopress
+
 ```bash
-gopress -h
+$ go get github.com/qichengzx/gopress
+```
+### Generate static files
+
+```bash
+$ gopress -g
+```
+
+### Start the server
+
+```bash
+$ gopress -s
+```
+
+### Help
+
+```bash
+$ gopress -h
 ```
 
 ## License

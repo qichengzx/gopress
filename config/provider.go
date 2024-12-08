@@ -1,10 +1,11 @@
 package config
 
 import (
-	"gopkg.in/yaml.v2"
-	"io/ioutil"
 	"log"
+	"os"
 	"path/filepath"
+
+	"gopkg.in/yaml.v2"
 )
 
 const ThemeDir = "themes"
@@ -49,7 +50,7 @@ type Menu struct {
 }
 
 func NewProvider(f string) *Config {
-	b, err := ioutil.ReadFile(f)
+	b, err := os.ReadFile(f)
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}
@@ -67,7 +68,7 @@ func NewProvider(f string) *Config {
 
 func themeCfgProvider(f string) ThemeCfg {
 	var conf ThemeCfg
-	b, err := ioutil.ReadFile(f)
+	b, err := os.ReadFile(f)
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}

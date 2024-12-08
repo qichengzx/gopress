@@ -3,10 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/qichengzx/gopress/generator"
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/qichengzx/gopress/generator"
 )
 
 func main() {
@@ -16,8 +17,7 @@ func main() {
 	flag.Parse()
 
 	switch {
-
-	case *generatePtr: 
+	case *generatePtr:
 		timeStart := time.Now()
 		log.Println("Process begining")
 		defer func() {
@@ -29,10 +29,10 @@ func main() {
 
 		var site = generator.New("./_config.yaml")
 		site.Build()
-		break;
+		break
 
-	case *servePtr && *portPtr != "" :
-		fmt.Println("server run at", *portPtr)
+	case *servePtr && *portPtr != "":
+		fmt.Println("server running at", *portPtr)
 		err := http.ListenAndServe(":"+*portPtr, http.FileServer(http.Dir("./public/")))
 		if err != nil {
 			log.Fatal("ListenAndServe: ", err)

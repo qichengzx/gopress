@@ -1,7 +1,7 @@
 package sitemap
 
 import (
-	"io/ioutil"
+	"os"
 )
 
 type Sitemap struct {
@@ -42,7 +42,7 @@ func (sm Sitemap) Go(post, category, tag []Item) {
 }
 
 func makeFile(c []byte, file string) {
-	err := ioutil.WriteFile(file, c, 0644)
+	err := os.WriteFile(file, c, 0644)
 	if err != nil {
 		panic(err)
 	}

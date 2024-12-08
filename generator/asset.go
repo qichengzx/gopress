@@ -5,7 +5,6 @@ package generator
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -75,7 +74,7 @@ func CopyDir(src string, dst string) (err error) {
 		return
 	}
 
-	entries, err := ioutil.ReadDir(src)
+	entries, err := os.ReadDir(src)
 	if err != nil {
 		return
 	}
@@ -91,7 +90,7 @@ func CopyDir(src string, dst string) (err error) {
 			}
 		} else {
 			// Skip symlinks.
-			if entry.Mode()&os.ModeSymlink != 0 {
+			if entry.Type()&os.ModeSymlink != 0 {
 				continue
 			}
 
@@ -109,7 +108,7 @@ func WriteFile(c []byte, file string) {
 	dir := filepath.Dir(file)
 	os.MkdirAll(dir, 0777)
 
-	err := ioutil.WriteFile(file, c, 0644)
+	err := os.WriteFile(file, c, 0644)
 	if err != nil {
 		panic(err)
 	}

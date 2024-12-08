@@ -3,11 +3,7 @@ package generator
 import (
 	"crypto/md5"
 	"encoding/hex"
-	"github.com/qichengzx/gopress/config"
-	"github.com/russross/blackfriday"
-	"gopkg.in/yaml.v2"
 	"html/template"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -15,6 +11,10 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/qichengzx/gopress/config"
+	"github.com/russross/blackfriday/v2"
+	"gopkg.in/yaml.v2"
 )
 
 type PostWarp struct {
@@ -140,7 +140,7 @@ func getPostlist(path string) (PostWarp, []string, []string) {
 }
 
 func (p *Post) new(filename string) *Post {
-	fileContent, err := ioutil.ReadFile(filename)
+	fileContent, err := os.ReadFile(filename)
 	if err != nil {
 		panic(err)
 	}
@@ -162,7 +162,7 @@ func parsePost(content []byte) ([]byte, template.HTML) {
 	}
 
 	byteContent := match[3]
-	htmlContent := blackfriday.MarkdownCommon(byteContent)
+	htmlContent := blackfriday.Run(byteContent)
 
 	return match[1], template.HTML(htmlContent)
 }
@@ -323,7 +323,6 @@ func formatUTC(layout string) time.Time {
 	}
 	return t.UTC()
 }
-
 
 func (pw postWrapper) Len() int           { return len(pw) }
 func (pw postWrapper) Less(i, j int) bool { return pw[i].Unixtime > pw[j].Unixtime }

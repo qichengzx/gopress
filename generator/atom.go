@@ -1,10 +1,11 @@
 package generator
 
 import (
-	"github.com/gorilla/feeds"
 	"log"
 	"path/filepath"
 	"time"
+
+	"github.com/gorilla/feeds"
 )
 
 func (s *Site) Atom() {
